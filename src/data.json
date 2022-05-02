@@ -1,0 +1,98 @@
+{
+  "library": {
+    "tag": "div",
+    "className": "library",
+    "id": "library"
+  },
+
+  "settings": {
+    "wrap": {
+      "tag": "div",
+      "className": "settings"
+    },
+
+    "toggleTheme": {
+      "tag": "button",
+      "className": "toggleTheme",
+      "idLight": "light",
+      "idDark": "dark",
+      "light": "Light Theme",
+      "dark": "Dark Theme"
+    },
+
+    "toggleView": {
+      "wrap": {
+        "tag": "div",
+        "className": "dropdown"
+      },
+      "toggle": {
+        "tag": "button",
+        "className": "toggleView",
+        "id": "toggleView",
+        "textContent": "Change Book View"
+      },
+      "view": {
+        "wrap": {
+          "tag": "div",
+          "className": "dropdown-content"
+        },
+        "common": {
+          "tag": "button",
+          "className": "toggleView"
+        },
+        "individual": {
+          "card": {
+            "id": "toggleCard",
+            "textContent": "Card View"
+          },
+
+          "table": {
+            "id": "toggleTable",
+            "textContent": "Table View"
+          }
+        }
+      }
+    }
+  },
+
+  "fieldHeaders": {
+    "id": "Book id: ",
+    "author": "Author: ",
+    "title": "Book title: ",
+    "pages": "Number of pages: ",
+    "publish": "Publish date: ",
+    "start": "Start reading: ",
+    "finish": "Finish reading: ",
+    "isRead": "Is it read: ",
+    "created": "Created: ",
+    "actions": "Actions: "
+  },
+
+  "btnNames": {
+    "edit": "Edit",
+    "delete": "Delete"
+  },
+
+  "formContent": {
+    "author": ["Author", "text"],
+    "title": ["Book Title", "text"],
+    "pageNumber": ["Number of Pages in the Book", "number"],
+    "publishDate": ["Book publish date", "date"],
+    "startReading": ["Start reading date", "date"],
+    "finishReading": ["Finish reading date", "date"],
+    "isRead": ["Mark as read", "checkbox"]
+  },
+
+  "exampleBook": {
+    "id": "mb-1",
+    "author": "Good guy",
+    "title": "Best Seller",
+    "pageNumber": "823",
+    "publishDate": "2021-12-31",
+    "startReading": "2021-12-31",
+    "finishReading": "2022-02-28",
+    "isRead": true,
+    "dateOfCreation": "2021-09-20 23:59:59",
+    "actions": null
+  }
+}

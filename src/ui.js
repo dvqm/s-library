@@ -12,18 +12,18 @@ class UI {
   }
 
   static settings(library) {
-    const settingsWrap = document.createElement(data.settingsWrap.tag);
-    settingsWrap.className = data.settingsWrap.className;
+    const settingsWrap = document.createElement(data.settings.wrap.tag);
+    settingsWrap.className = data.settings.wrap.className;
 
-    const toggleTheme = document.createElement(data.toggleTheme.tag);
-    toggleTheme.className = data.toggleTheme.className;
-    toggleTheme.id = data.toggleTheme.idDark;
-    toggleTheme.textContent = data.toggleTheme.dark;
+    const toggleTheme = document.createElement(data.settings.toggleTheme.tag);
+    toggleTheme.className = data.settings.toggleTheme.className;
+    toggleTheme.id = data.settings.toggleTheme.idDark;
+    toggleTheme.textContent = data.settings.toggleTheme.dark;
 
-    const viewData = data.toggleView;
+    const viewData = data.settings.toggleView;
 
-    const toggleViewWrap = document.createElement(viewData.wrapper.tag);
-    toggleViewWrap.className = viewData.wrapper.className;
+    const toggleViewWrap = document.createElement(viewData.wrap.tag);
+    toggleViewWrap.className = viewData.wrap.className;
 
     const toggleViewBtn = document.createElement(viewData.toggle.tag);
     toggleViewBtn.className = viewData.toggle.className;
@@ -33,8 +33,8 @@ class UI {
     const viewTypes = (view) => {
       const viewData = Object.values(view.individual);
 
-      const dropdownContent = document.createElement(view.wrapper.tag);
-      dropdownContent.className = view.wrapper.className;
+      const dropdownContent = document.createElement(view.wrap.tag);
+      dropdownContent.className = view.wrap.className;
 
       viewData.map((type) => {
         const element = document.createElement(view.common.tag);
@@ -54,6 +54,8 @@ class UI {
 
     library.append(settingsWrap);
   }
+
+  static statistic() {}
 }
 
 export default UI;
