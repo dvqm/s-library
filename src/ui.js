@@ -9,53 +9,94 @@ class UI {
     document.body.append(this.library);
 
     this.constructor.settings(this.library);
+    this.constructor.statistic(this.library);
   }
 
   static settings(library) {
-    const settingsWrap = document.createElement(data.settings.wrap.tag);
-    settingsWrap.className = data.settings.wrap.className;
+    const wrapData = data.settings.wrap;
 
-    const toggleTheme = document.createElement(data.settings.toggleTheme.tag);
-    toggleTheme.className = data.settings.toggleTheme.className;
-    toggleTheme.id = data.settings.toggleTheme.idDark;
-    toggleTheme.textContent = data.settings.toggleTheme.dark;
+    const wrap = document.createElement(wrapData.tag);
+    wrap.className = wrapData.className;
+
+    const themeData = data.settings.toggleTheme;
+
+    const toggleTheme = document.createElement(themeData.tag);
+    toggleTheme.className = themeData.className;
+    toggleTheme.id = themeData.idDark;
+    toggleTheme.textContent = themeData.dark;
 
     const viewData = data.settings.toggleView;
 
-    const toggleViewWrap = document.createElement(viewData.wrap.tag);
-    toggleViewWrap.className = viewData.wrap.className;
+    const viewWrap = document.createElement(viewData.wrap.tag);
+    viewWrap.className = viewData.wrap.className;
 
-    const toggleViewBtn = document.createElement(viewData.toggle.tag);
-    toggleViewBtn.className = viewData.toggle.className;
-    toggleViewBtn.id = viewData.toggle.id;
-    toggleViewBtn.textContent = viewData.toggle.textContent;
+    const viewBtn = document.createElement(viewData.toggle.tag);
+    viewBtn.className = viewData.toggle.className;
+    viewBtn.id = viewData.toggle.id;
+    viewBtn.textContent = viewData.toggle.textContent;
 
-    const viewTypes = (view) => {
+    const mapViewToggles = (view) => {
       const viewData = Object.values(view.individual);
 
-      const dropdownContent = document.createElement(view.wrap.tag);
-      dropdownContent.className = view.wrap.className;
+      const wrap = document.createElement(view.wrap.tag);
+      wrap.className = view.wrap.className;
 
       viewData.map((type) => {
-        const element = document.createElement(view.common.tag);
-        element.className = view.common.className;
-        element.id = type.id;
-        element.textContent = type.textContent;
-        return dropdownContent.append(element);
+        const viewType = document.createElement(view.common.tag);
+        viewType.className = view.common.className;
+        viewType.id = type.id;
+        viewType.textContent = type.textContent;
+        return wrap.append(viewType);
       });
-      return dropdownContent;
+      return wrap;
     };
 
-    toggleViewWrap.append(toggleViewBtn);
-    toggleViewWrap.append(viewTypes(viewData.view));
+    viewWrap.append(viewBtn);
+    viewWrap.append(mapViewToggles(viewData.view));
 
-    settingsWrap.append(toggleTheme);
-    settingsWrap.append(toggleViewWrap);
+    wrap.append(toggleTheme);
+    wrap.append(viewWrap);
 
-    library.append(settingsWrap);
+    library.append(wrap);
   }
 
-  static statistic() {}
+  static statistic(library) {
+    const wrapData = data.statistic.wrap;
+    const casing = document.createElement(wrapData.tag);
+    casing.className = wrapData.className;
+
+    const headerData = data.statistic.header;
+    const header = document.createElement(headerData.tag);
+    header.className = headerData.className;
+    header.textContent = headerData.textContent;
+
+    const appendStatFields = () => {
+      const common = data.statistic.fields.common;
+      const individual = data.statistic.fields.individual;
+
+      const fieldsDescription = Object.values(individual);
+      fieldsDescription.map((field) => {
+        const wrap = document.createElement(common.wrap.tag);
+        wrap.className = common.wrap.className;
+
+        const title = document.createElement(common.title.tag);
+        title.className = common.title.className;
+        title.textContent = field.titleContent;
+
+        const value = document.createElement(common.value.tag);
+        value.className = common.value.className;
+        value.id = field.valueId;
+
+        wrap.append(title);
+        wrap.append(value);
+        return casing.append(wrap);
+      });
+    };
+
+    casing.append(header);
+    appendStatFields();
+    library.append(casing);
+  }
 }
 
 export default UI;

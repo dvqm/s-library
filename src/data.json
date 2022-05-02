@@ -55,6 +55,52 @@
     }
   },
 
+  "statistic": {
+    "wrap": {
+      "tag": "div",
+      "className": "statistic"
+    },
+    "header": {
+      "tag": "h2",
+      "className": "header",
+      "textContent": "Statistics"
+    },
+    "fields": {
+      "common": {
+        "wrap": {
+          "tag": "p",
+          "className": "field"
+        },
+        "title": {
+          "tag": "span",
+          "className": "title"
+        },
+        "value": {
+          "tag": "span",
+          "className": "value"
+        }
+      },
+      "individual": {
+        "books": {
+          "titleContent": "Books in the library: ",
+          "valueId": "booksNum"
+        },
+        "read": {
+          "titleContent": "Read books: ",
+          "valueId": "readNum"
+        },
+        "pages": {
+          "titleContent": "Pages in total: ",
+          "valueId": "pagesNum"
+        },
+        "forgotten": {
+          "titleContent": "Forgotten books: ",
+          "valueId": "forgotNum"
+        }
+      }
+    }
+  },
+
   "fieldHeaders": {
     "id": "Book id: ",
     "author": "Author: ",
