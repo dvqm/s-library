@@ -101,22 +101,97 @@
     }
   },
 
-  "fieldHeaders": {
-    "id": "Book id: ",
-    "author": "Author: ",
-    "title": "Book title: ",
-    "pages": "Number of pages: ",
-    "publish": "Publish date: ",
-    "start": "Start reading: ",
-    "finish": "Finish reading: ",
-    "isRead": "Is it read: ",
-    "created": "Created: ",
-    "actions": "Actions: "
-  },
+  "viewModels": {
+    "common": {
+      "headers": {
+        "id": "Book id: ",
+        "author": "Author: ",
+        "title": "Book title: ",
+        "pages": "Number of pages: ",
+        "publish": "Publish date: ",
+        "start": "Start reading: ",
+        "finish": "Finish reading: ",
+        "isRead": "Is it read: ",
+        "created": "Created: ",
+        "actions": "Actions: "
+      },
+      "extras": {
+        "classNames": {
+          "covers": {
+            "author": "author",
+            "title": "title"
+          },
+          "headers": {},
+          "values": {}
+        }
+      },
 
-  "btnNames": {
-    "edit": "Edit",
-    "delete": "Delete"
+      "buttons": {
+        "isRead": {
+          "tag": "button",
+          "yesClassName": "isRead uncheck",
+          "noClassName": "isRead check",
+          "yesText": "Yes.",
+          "noText": "No."
+        },
+        "actions": {
+          "common": {
+            "tag": "button",
+            "className": "actionBtn"
+          },
+          "individual": {
+            "edit": {
+              "textContent": "Edit"
+            },
+            "delete": {
+              "textContent": "Delete"
+            }
+          }
+        }
+      }
+    },
+    "cards": {
+      "shell": {
+        "tag": "div",
+        "className": "cardsView",
+        "id": "cards"
+      },
+      "cover": {
+        "tag": "div",
+        "className": "card"
+      },
+      "field": {
+        "tag": "p",
+        "className": "bookField"
+      },
+      "title": {
+        "tag": "span",
+        "className": "fieldTitle"
+      },
+      "value": {
+        "tag": "span",
+        "className": "fieldValue"
+      }
+    },
+    "table": {
+      "table": {
+        "tag": "table",
+        "className": "tableView",
+        "id": "table"
+      },
+      "tr": {
+        "tag": "tr",
+        "className": "tableRow"
+      },
+      "th": {
+        "tag": "th",
+        "className": "tableHeader"
+      },
+      "td": {
+        "tag": "td",
+        "className": "tableData"
+      }
+    }
   },
 
   "formContent": {
@@ -133,12 +208,12 @@
     "id": "mb-1",
     "author": "Good guy",
     "title": "Best Seller",
-    "pageNumber": "823",
-    "publishDate": "2021-12-31",
-    "startReading": "2021-12-31",
-    "finishReading": "2022-02-28",
+    "pages": "823",
+    "publish": "2021-12-31",
+    "start": "2022-01-11",
+    "finish": "2022-02-28",
     "isRead": true,
-    "dateOfCreation": "2021-09-20 23:59:59",
+    "created": "2021-09-20 23:59:59",
     "actions": null
   }
 }

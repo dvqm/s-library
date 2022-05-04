@@ -7,12 +7,9 @@ class UI {
     this.library.className = data.library.className;
     this.library.id = data.library.id;
     document.body.append(this.library);
-
-    this.constructor.settings(this.library);
-    this.constructor.statistic(this.library);
   }
 
-  static settings(library) {
+  settings() {
     const wrapData = data.settings.wrap;
 
     const wrap = document.createElement(wrapData.tag);
@@ -57,10 +54,10 @@ class UI {
     wrap.append(toggleTheme);
     wrap.append(viewWrap);
 
-    library.append(wrap);
+    this.library.append(wrap);
   }
 
-  static statistic(library) {
+  statistic() {
     const wrapData = data.statistic.wrap;
     const casing = document.createElement(wrapData.tag);
     casing.className = wrapData.className;
@@ -95,7 +92,124 @@ class UI {
 
     casing.append(header);
     appendStatFields();
-    library.append(casing);
+    this.library.append(casing);
+  }
+
+  static btnsDraw(key, value) {
+    const btnsData = data.viewModels.common.buttons;
+
+    const btnsKeys = Object.keys(btnsData);
+    const isRead = btnsKeys[0];
+    const actions = btnsKeys[1];
+
+    switch (key) {
+      case isRead:
+        const isReadData = btnsData.isRead;
+        const isReadBtn = document.createElement(isReadData.tag);
+        if (value.textContent === 'true') { //TODO change it to true after connect localData
+          isReadBtn.className = isReadData.yesClassName;
+          isReadBtn.textContent = isReadData.yesText;
+        } else if (value.textContent === 'false') { //TODO change it to false after connect localData
+          isReadBtn.className = isReadData.noClassName;
+          isReadBtn.textContent = isReadData.noText;
+        }
+
+        value.innerHTML = '';
+        return value.append(isReadBtn);
+
+      case actions:
+        const actionData = btnsData.actions.common;
+        const actionBtn = document.createElement(actionData.tag);
+        actionBtn.className = actionData.className;
+
+        const btns = btnsData.actions.individual;
+        for (let btn in btns) {
+          actionBtn.textContent = btns[btn].textContent;
+          value.append(actionBtn.cloneNode(true));
+        }
+    }
+  }
+
+  cardView(myLibrary) {
+    const cards = data.viewModels.cards;
+
+    const libData = cards.shell;
+    const lib = document.createElement(libData.tag);
+    lib.className = libData.className;
+    lib.id = libData.id;
+
+    myLibrary.map((book) => {
+      const coverData = cards.cover;
+      const cover = document.createElement(coverData.tag);
+      cover.className = coverData.className;
+
+      const bookKeys = Object.keys(book);
+      bookKeys.map((key) => {
+        const stringData = cards.field;
+        const string = document.createElement(stringData.tag);
+        string.className = stringData.className;
+
+        const titleData = cards.title;
+        const title = document.createElement(titleData.tag);
+        title.className = titleData.className;
+        const headersData = data.viewModels.common.headers;
+        title.textContent = headersData[key];
+
+        const valueData = cards.value;
+        const value = document.createElement(valueData.tag);
+        value.className = valueData.className;
+        value.textContent = book[key];
+        this.constructor.btnsDraw(key, value);
+
+        string.append(title);
+        string.append(value);
+        return cover.append(string);
+      });
+      lib.append(cover);
+    });
+    this.library.append(lib);
+  }
+
+  tableView(myLibrary) {
+    const tableData = data.viewModels.table;
+    const tableTagData = data.viewModels.table.table;
+    const table = document.createElement(tableTagData.tag);
+    table.className = tableTagData.className;
+    table.id = tableTagData.id;
+
+    myLibrary.map((book) => {
+      const trData = tableData.tr;
+      const trTh = document.createElement(trData.tag);
+      trTh.className = trData.className;
+
+      const bookKeys = Object.keys(book);
+      const headersData = data.viewModels.common.headers;
+      bookKeys.map((key) => {
+        const thData = tableData.th;
+        const th = document.createElement(thData.tag);
+        th.className = thData.className;
+
+        const header = headersData[key].slice(0, -2);
+        th.textContent = header;
+
+        return trTh.append(th);
+      });
+
+      const trTd = document.createElement(trData.tag);
+      trTd.className = trData.className;
+
+      bookKeys.map((key) => {
+        const tdData = tableData.td;
+        const td = document.createElement(tdData.tag);
+        td.className = tdData.className;
+        td.textContent = book[key];
+        this.constructor.btnsDraw(key, td);
+
+        return trTd.append(td);
+      });
+      this.library.append(trTh);
+      this.library.append(trTd);
+    });
   }
 }
 
