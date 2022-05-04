@@ -106,10 +106,12 @@ class UI {
       case isRead:
         const isReadData = btnsData.isRead;
         const isReadBtn = document.createElement(isReadData.tag);
-        if (value.textContent === 'true') { //TODO change it to true after connect localData
+        if (value.textContent === 'true') {
+          //TODO change it to true after connect localData
           isReadBtn.className = isReadData.yesClassName;
           isReadBtn.textContent = isReadData.yesText;
-        } else if (value.textContent === 'false') { //TODO change it to false after connect localData
+        } else if (value.textContent === 'false') {
+          //TODO change it to false after connect localData
           isReadBtn.className = isReadData.noClassName;
           isReadBtn.textContent = isReadData.noText;
         }
@@ -172,32 +174,39 @@ class UI {
 
   tableView(myLibrary) {
     const tableData = data.viewModels.table;
+
     const tableTagData = data.viewModels.table.table;
     const table = document.createElement(tableTagData.tag);
     table.className = tableTagData.className;
     table.id = tableTagData.id;
 
+    const trData = tableData.tr;
+
+    const trTh = document.createElement(trData.tag);
+    trTh.className = trData.className;
+
+    const bookKeys = Object.keys(myLibrary[0]);
+    const headersData = data.viewModels.common.headers;
+
+    bookKeys.map((key) => {
+      const thData = tableData.th;
+      const th = document.createElement(thData.tag);
+      th.className = thData.className;
+
+      const header = headersData[key].slice(0, -2);
+      th.textContent = header;
+
+      return trTh.append(th);
+    });
+
+    table.append(trTh);
+    this.library.append(table);
+
     myLibrary.map((book) => {
-      const trData = tableData.tr;
-      const trTh = document.createElement(trData.tag);
-      trTh.className = trData.className;
-
-      const bookKeys = Object.keys(book);
-      const headersData = data.viewModels.common.headers;
-      bookKeys.map((key) => {
-        const thData = tableData.th;
-        const th = document.createElement(thData.tag);
-        th.className = thData.className;
-
-        const header = headersData[key].slice(0, -2);
-        th.textContent = header;
-
-        return trTh.append(th);
-      });
-
       const trTd = document.createElement(trData.tag);
       trTd.className = trData.className;
 
+      const bookKeys = Object.keys(book);
       bookKeys.map((key) => {
         const tdData = tableData.td;
         const td = document.createElement(tdData.tag);
@@ -207,8 +216,8 @@ class UI {
 
         return trTd.append(td);
       });
-      this.library.append(trTh);
-      this.library.append(trTd);
+      table.append(trTd);
+      this.library.append(table);
     });
   }
 }
