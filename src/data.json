@@ -194,14 +194,80 @@
     }
   },
 
-  "formContent": {
-    "author": ["Author", "text"],
-    "title": ["Book Title", "text"],
-    "pageNumber": ["Number of Pages in the Book", "number"],
-    "publishDate": ["Book publish date", "date"],
-    "startReading": ["Start reading date", "date"],
-    "finishReading": ["Finish reading date", "date"],
-    "isRead": ["Mark as read", "checkbox"]
+  "addBookForm": {
+    "common": {
+      "wrap": {
+        "tag": "dialog",
+        "className": ""
+      },
+      "form": {
+        "tag": "form",
+        "className": ""
+      },
+      "title": {
+        "tag": "h2",
+        "className": "formHeader",
+        "textContent": "Please, add the Book."
+      },
+      "field": {
+        "wrap": {
+          "tag": "label",
+          "className": ""
+        },
+        "title": {
+          "tag": "span",
+          "className": ""
+        },
+        "input": {
+          "tag": "input",
+          "className": ""
+        },
+        "inputData": {
+          "author": {
+            "name": "Author: ",
+            "type": "text",
+            "className": "",
+            "id": "author"
+          },
+          "title": {
+            "name": "Title: ",
+            "type": "text",
+            "className": "",
+            "id": "title"
+          },
+          "pages": {
+            "name": "Number of pages: ",
+            "type": "number",
+            "className": "",
+            "id": "pageNum"
+          },
+          "publish": {
+            "name": "Publish date: ",
+            "type": "date",
+            "className": "",
+            "id": "pubDate"
+          },
+          "start": {
+            "name": "Start reading Date: ",
+            "type": "date",
+            "className": "",
+            "id": "startDate"
+          },
+          "finish": {
+            "name": "Finish reading date: ",
+            "type": "date",
+            "className": "",
+            "id": "finishDate"
+          },
+          "isRead": {
+            "name": "Is it read?",
+            "type": "checkbox",
+            "className": "",
+            "id": "isRead"
+          }
+        }
+      }
+    }
   },
 
   "exampleBook": {

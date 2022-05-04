@@ -220,6 +220,61 @@ class UI {
       this.library.append(table);
     });
   }
+
+  addBookForm() {
+    const addBookFormData = data.addBookForm.common;
+
+    const wrapData = addBookFormData.wrap;
+    const wrap = document.createElement(wrapData.tag);
+    wrap.className = wrapData.className;
+    //TODO remove plug after event addBookForm;
+    wrap.setAttribute('open', 'open');
+
+    const formData = addBookFormData.form;
+    const form = document.createElement(formData.tag);
+    form.className = formData.className;
+
+    const headerData = addBookFormData.title;
+    const header = document.createElement(headerData.tag);
+    header.className = headerData.className;
+    header.textContent = headerData.textContent;
+
+    const formFieldsData = addBookFormData.field;
+    const fieldData = formFieldsData.wrap;
+    const titleData = formFieldsData.title;
+    const inputData = formFieldsData.input;
+
+    const fieldsAdd = () => {
+      const fieldSettings = formFieldsData.inputData;
+      for (let key in fieldSettings) {
+        const value = fieldSettings[key];
+
+        const field = document.createElement(fieldData.tag);
+        field.className = fieldData.className;
+        field.htmlFor = value.id;
+
+        const title = document.createElement(titleData.tag);
+        title.className = titleData.className;
+        title.textContent = value.name;
+
+        const input = document.createElement(inputData.tag);
+        input.type = value.type;
+        input.className = inputData.className;
+
+        if (value.className !== '') input.classList.add(value.className);
+        input.id = value.id;
+
+        field.append(title);
+        field.append(input);
+        form.append(field);
+      }
+    };
+
+    form.append(header);
+    fieldsAdd();
+    wrap.append(form);
+    this.library.append(wrap);
+  }
 }
 
 export default UI;
