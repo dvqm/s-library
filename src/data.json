@@ -195,78 +195,90 @@
   },
 
   "addBookForm": {
-    "common": {
+    "wrap": {
+      "tag": "dialog",
+      "className": ""
+    },
+    "form": {
+      "tag": "form",
+      "className": ""
+    },
+    "title": {
+      "tag": "h2",
+      "className": "formHeader",
+      "textContent": "Please, add the Book."
+    },
+    "field": {
       "wrap": {
-        "tag": "dialog",
-        "className": ""
-      },
-      "form": {
-        "tag": "form",
+        "tag": "label",
         "className": ""
       },
       "title": {
-        "tag": "h2",
-        "className": "formHeader",
-        "textContent": "Please, add the Book."
+        "tag": "span",
+        "className": ""
       },
-      "field": {
-        "wrap": {
-          "tag": "label",
-          "className": ""
+      "input": {
+        "tag": "input",
+        "className": ""
+      },
+      "inputData": {
+        "author": {
+          "name": "Author: ",
+          "type": "text",
+          "className": "",
+          "id": "author"
         },
         "title": {
-          "tag": "span",
-          "className": ""
+          "name": "Title: ",
+          "type": "text",
+          "className": "",
+          "id": "title"
         },
-        "input": {
-          "tag": "input",
-          "className": ""
+        "pages": {
+          "name": "Number of pages: ",
+          "type": "number",
+          "className": "",
+          "id": "pageNum"
         },
-        "inputData": {
-          "author": {
-            "name": "Author: ",
-            "type": "text",
-            "className": "",
-            "id": "author"
-          },
-          "title": {
-            "name": "Title: ",
-            "type": "text",
-            "className": "",
-            "id": "title"
-          },
-          "pages": {
-            "name": "Number of pages: ",
-            "type": "number",
-            "className": "",
-            "id": "pageNum"
-          },
-          "publish": {
-            "name": "Publish date: ",
-            "type": "date",
-            "className": "",
-            "id": "pubDate"
-          },
-          "start": {
-            "name": "Start reading Date: ",
-            "type": "date",
-            "className": "",
-            "id": "startDate"
-          },
-          "finish": {
-            "name": "Finish reading date: ",
-            "type": "date",
-            "className": "",
-            "id": "finishDate"
-          },
-          "isRead": {
-            "name": "Is it read?",
-            "type": "checkbox",
-            "className": "",
-            "id": "isRead"
-          }
+        "publish": {
+          "name": "Publish date: ",
+          "type": "date",
+          "className": "",
+          "id": "pubDate"
+        },
+        "start": {
+          "name": "Start reading Date: ",
+          "type": "date",
+          "className": "",
+          "id": "startDate"
+        },
+        "finish": {
+          "name": "Finish reading date: ",
+          "type": "date",
+          "className": "",
+          "id": "finishDate"
+        },
+        "isRead": {
+          "name": "Is it read?",
+          "type": "checkbox",
+          "className": "",
+          "id": "isRead"
         }
       }
+    }
+  },
+
+  "addBookBtn": {
+    "wrap": {
+      "tag": "div",
+      "className": "btnWrap"
+    },
+    "btn": {
+      "tag": "button",
+      "className": "addBookBtn",
+      "id": "addBook",
+      "text": "Add Book",
+      "saveText": "Save Book"
     }
   },
 
