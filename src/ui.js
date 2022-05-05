@@ -227,8 +227,6 @@ class UI {
     const wrapData = addBookFormData.wrap;
     const wrap = document.createElement(wrapData.tag);
     wrap.className = wrapData.className;
-    //TODO remove plug after event addBookForm;
-    wrap.setAttribute('open', 'open');
 
     const formData = addBookFormData.form;
     const form = document.createElement(formData.tag);
@@ -270,10 +268,26 @@ class UI {
       }
     };
 
+    const btnsAdd = () => {
+      const btnsData = addBookFormData.buttons;
+      for (let key in btnsData) {
+        const value = btnsData[key];
+        const btn = document.createElement(value.tag);
+        btn.className = value.className;
+        btn.id = value.id;
+        btn.textContent = value.text;
+        form.append(btn);
+      }
+    };
+
     form.append(header);
     fieldsAdd();
+    btnsAdd();
     wrap.append(form);
     this.library.append(wrap);
+
+    //TODO remove plug after event addBookForm;
+    wrap.showModal();
   }
 
   addBookBtn() {

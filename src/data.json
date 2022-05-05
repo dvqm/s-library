@@ -197,11 +197,11 @@
   "addBookForm": {
     "wrap": {
       "tag": "dialog",
-      "className": ""
+      "className": "dialog"
     },
     "form": {
       "tag": "form",
-      "className": ""
+      "className": "addBookForm"
     },
     "title": {
       "tag": "h2",
@@ -265,15 +265,28 @@
           "id": "isRead"
         }
       }
+    },
+    "buttons": {
+      "save": {
+        "tag": "button",
+        "text": "Save",
+        "id": "save",
+        "className": "formBtn save"
+      },
+      "close": {
+        "tag": "button",
+        "text": "Close",
+        "id": "close",
+        "className": "formBtn close"
+      }
     }
   },
 
   "addBookBtn": {
-      "tag": "button",
-      "className": "addBookBtn",
-      "id": "addBook",
-      "text": "Add Book",
-      "saveText": "Save Book"
+    "tag": "button",
+    "className": "addBookBtn",
+    "id": "addBook",
+    "text": "Add Book"
   },
 
   "exampleBook": {
