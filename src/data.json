@@ -269,17 +269,11 @@
   },
 
   "addBookBtn": {
-    "wrap": {
-      "tag": "div",
-      "className": "btnWrap"
-    },
-    "btn": {
       "tag": "button",
       "className": "addBookBtn",
       "id": "addBook",
       "text": "Add Book",
       "saveText": "Save Book"
-    }
   },
 
   "exampleBook": {

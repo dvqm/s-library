@@ -277,20 +277,13 @@ class UI {
   }
 
   addBookBtn() {
-    const addBookBtnData = data.addBookBtn;
-
-    const wrapData = addBookBtnData.wrap;
-    const wrap = document.createElement(wrapData.tag);
-    wrap.className = wrapData.className;
-
-    const btnData = addBookBtnData.btn;
+    const btnData = data.addBookBtn;
     const btn = document.createElement(btnData.tag);
     btn.className = btnData.className;
     btn.id = btnData.id;
     btn.textContent = btnData.text;
 
-    wrap.append(btn);
-    this.library.append(wrap);
+    this.library.append(btn);
   }
 }
 
