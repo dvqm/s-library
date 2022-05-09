@@ -21,8 +21,8 @@ class EventCreator {
     return target.prepend(node);
   }
 
-  replace() {
-    const elementValue = this.orders.replace;
+  static replace(trigger) {
+    const elementValue = trigger;
     if (document.querySelector(elementValue)) {
       const element = document.querySelector(elementValue);
       element.remove();
@@ -32,20 +32,24 @@ class EventCreator {
   event() {
     const element = document.querySelector(this.orders.element);
 
-    const action = (e) => {
-      const inject = this.orders.inject;
-      const ui = this.orders.ui;
+    const action = () => {
+      const triggerBefore = this.orders.replaceBeforeEvent;
+      if (triggerBefore) this.constructor.replace(triggerBefore);
+
+      const { inject } = this.orders;
+      const { ui } = this.orders;
       if (ui) this[inject](ui());
 
-      this.replace();
+      const { nextAction } = this.orders;
+      if (nextAction) this.orders.nextAction();
 
-      const nextAction = this.orders.nextAction;
-      if (nextAction) nextAction();
+      const triggerAfter = this.orders.replaceAfterEvent;
+      if (triggerAfter) this.constructor.replace(triggerAfter);
     };
 
     const add = () => {
-      const type = this.orders.type;
-      const eventOptions = this.orders.eventOptions;
+      const { type } = this.orders;
+      const { eventOptions } = this.orders;
       element.addEventListener(type, action, eventOptions);
     };
     return { add };
