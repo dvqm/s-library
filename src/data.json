@@ -114,37 +114,22 @@
         "created": "Created: ",
         "actions": "Actions: "
       },
-      "extras": {
-        "classNames": {
-          "covers": {
-            "author": "author",
-            "title": "title"
-          },
-          "headers": {},
-          "values": {}
-        }
-      },
 
       "buttons": {
         "isRead": {
           "tag": "button",
-          "yesClassName": "isRead uncheck",
-          "noClassName": "isRead check",
-          "yesText": "Yes.",
-          "noText": "No."
+          "className": "isRead",
+          "text": {
+            "true": "Yes.",
+            "false": "No."
+          }
         },
         "actions": {
-          "common": {
-            "tag": "button",
-            "className": "actionBtn"
-          },
-          "individual": {
-            "edit": {
-              "textContent": "Edit"
-            },
-            "delete": {
-              "textContent": "Delete"
-            }
+          "tag": "button",
+          "className": "actionBtn",
+          "text": {
+            "edit": "Edit.",
+            "delete": "Delete."
           }
         }
       }
@@ -153,7 +138,7 @@
       "shell": {
         "tag": "div",
         "className": "cardsView",
-        "id": "cards"
+        "id": "view"
       },
       "cover": {
         "tag": "div",
@@ -176,7 +161,7 @@
       "table": {
         "tag": "table",
         "className": "tableView",
-        "id": "table"
+        "id": "view"
       },
       "tr": {
         "tag": "tr",
@@ -218,48 +203,47 @@
         "className": ""
       },
       "input": {
-        "tag": "input",
-        "className": ""
+        "tag": "input"
       },
       "inputData": {
         "author": {
-          "name": "Author: ",
+          "textContent": "Author: ",
           "type": "text",
           "className": "",
           "id": "author"
         },
         "title": {
-          "name": "Title: ",
+          "textContent": "Title: ",
           "type": "text",
           "className": "",
           "id": "title"
         },
         "pages": {
-          "name": "Number of pages: ",
+          "textContent": "Number of pages: ",
           "type": "number",
           "className": "",
           "id": "pageNum"
         },
         "publish": {
-          "name": "Publish date: ",
+          "textContent": "Publish date: ",
           "type": "date",
           "className": "",
           "id": "pubDate"
         },
         "start": {
-          "name": "Start reading Date: ",
+          "textContent": "Start reading Date: ",
           "type": "date",
           "className": "",
           "id": "startDate"
         },
         "finish": {
-          "name": "Finish reading date: ",
+          "textContent": "Finish reading date: ",
           "type": "date",
           "className": "",
           "id": "finishDate"
         },
         "isRead": {
-          "name": "Is it read?",
+          "textContent": "Is it read?",
           "type": "checkbox",
           "className": "",
           "id": "isRead"
@@ -299,7 +283,7 @@
     "publish": "2021-12-31",
     "start": "2022-01-11",
     "finish": "2022-02-28",
-    "isRead": true,
+    "isRead": false,
     "created": "2021-09-20 23:59:59",
     "actions": null
   }
