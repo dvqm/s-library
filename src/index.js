@@ -18,7 +18,7 @@ const mainPage = new UiCreator(
   ui.settings().wrap,
   ui.statistic(),
   ui.cardView(myLibrary),
-  ui.addBookBtn()
+  ui.addBookBtn(),
 );
 
 mainPage.render();
@@ -29,7 +29,7 @@ const bookBtn = new EventCreator({
   inject: 'after',
   type: 'click',
   eventOptions: { once: true },
-  replace: '#addBook',
+  replaceAfterEvent: '#addBook',
   ui() {
     return ui.addBookForm();
   },
@@ -43,9 +43,9 @@ const bookBtn = new EventCreator({
 const formCloseBtn = new EventCreator({
   element: '#close',
   target: '#library',
-  inject: 'prepend',
+  inject: 'append',
   type: 'click',
-  replace: '#form',
+  replaceAfterEvent: '#form',
   eventOptions: { once: true },
   ui() {
     return ui.addBookBtn();
@@ -62,13 +62,9 @@ const card = new EventCreator({
   target: '.statistic',
   inject: 'after',
   type: 'click',
-  replace: '#table',
-  eventOptions: { once: true },
+  replaceBeforeEvent: '#view',
   ui() {
     return ui.cardView(myLibrary);
-  },
-  nextAction() {
-    table.event().add();
   },
 });
 
@@ -77,19 +73,15 @@ const table = new EventCreator({
   target: '.statistic',
   inject: 'after',
   type: 'click',
-  replace: '#cards',
-  eventOptions: { once: true },
+  replaceBeforeEvent: '#view',
   ui() {
     return ui.tableView(myLibrary);
-  },
-  nextAction() {
-    card.event().add();
   },
 });
 
 const toggleViewFold = new EventCreator({
   element: '.dropdown',
-  replace: '.dropdown-content',
+  replaceAfterEvent: '.dropdown-content',
   type: 'mouseleave',
   eventOptions: { once: true },
   nextAction() {
@@ -109,6 +101,7 @@ const toggleViewUnfold = new EventCreator({
   nextAction() {
     toggleViewFold.event().add();
     table.event().add();
+    card.event().add();
   },
 });
 
