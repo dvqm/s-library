@@ -1,6 +1,6 @@
 import data from './data.json';
 import './ui.scss';
-
+//TODO full refactor of the UI class.
 class UI {
   constructor() {
     this.library = document.createElement(data.library.tag);
@@ -22,25 +22,16 @@ class UI {
     toggleTheme.id = themeData.idDark;
     toggleTheme.textContent = themeData.dark;
 
-    const viewData = data.settings.toggleView;
+    const viewToggles = () => {
+      const viewData = data.settings.toggleView.view;
+      const viewValues = Object.values(viewData.individual);
 
-    const viewWrap = document.createElement(viewData.wrap.tag);
-    viewWrap.className = viewData.wrap.className;
+      const wrap = document.createElement(viewData.wrap.tag);
+      wrap.className = viewData.wrap.className;
 
-    const viewBtn = document.createElement(viewData.toggle.tag);
-    viewBtn.className = viewData.toggle.className;
-    viewBtn.id = viewData.toggle.id;
-    viewBtn.textContent = viewData.toggle.textContent;
-
-    const mapViewToggles = (view) => {
-      const viewData = Object.values(view.individual);
-
-      const wrap = document.createElement(view.wrap.tag);
-      wrap.className = view.wrap.className;
-
-      viewData.map((type) => {
-        const viewType = document.createElement(view.common.tag);
-        viewType.className = view.common.className;
+      viewValues.map((type) => {
+        const viewType = document.createElement(viewData.common.tag);
+        viewType.className = viewData.common.className;
         viewType.id = type.id;
         viewType.textContent = type.textContent;
         return wrap.append(viewType);
@@ -48,13 +39,27 @@ class UI {
       return wrap;
     };
 
-    viewWrap.append(viewBtn);
-    viewWrap.append(mapViewToggles(viewData.view));
+    const toggleView = () => {
+      const viewData = data.settings.toggleView;
+
+      const viewWrap = document.createElement(viewData.wrap.tag);
+      viewWrap.className = viewData.wrap.className;
+
+      const viewBtn = document.createElement(viewData.toggle.tag);
+      viewBtn.className = viewData.toggle.className;
+      viewBtn.id = viewData.toggle.id;
+      viewBtn.textContent = viewData.toggle.textContent;
+      const div = document.createElement('div');
+      viewWrap.append(viewBtn);
+      return viewWrap;
+    };
+
+    const dropdown = viewToggles();
 
     wrap.append(toggleTheme);
-    wrap.append(viewWrap);
+    wrap.append(toggleView());
 
-    this.library.append(wrap);
+    return { wrap, dropdown };
   }
 
   statistic() {
@@ -92,7 +97,7 @@ class UI {
 
     casing.append(header);
     appendStatFields();
-    this.library.append(casing);
+    return casing;
   }
 
   static btnsDraw(key, value) {
@@ -135,10 +140,10 @@ class UI {
   cardView(myLibrary) {
     const cards = data.viewModels.cards;
 
-    const libData = cards.shell;
-    const lib = document.createElement(libData.tag);
-    lib.className = libData.className;
-    lib.id = libData.id;
+    const shellData = cards.shell;
+    const shell = document.createElement(shellData.tag);
+    shell.className = shellData.className;
+    shell.id = shellData.id;
 
     myLibrary.map((book) => {
       const coverData = cards.cover;
@@ -165,11 +170,11 @@ class UI {
 
         string.append(title);
         string.append(value);
-        return cover.append(string);
+        cover.append(string);
       });
-      lib.append(cover);
+      shell.append(cover);
     });
-    this.library.append(lib);
+    return shell;
   }
 
   tableView(myLibrary) {
@@ -200,7 +205,6 @@ class UI {
     });
 
     table.append(trTh);
-    this.library.append(table);
 
     myLibrary.map((book) => {
       const trTd = document.createElement(trData.tag);
@@ -217,8 +221,9 @@ class UI {
         return trTd.append(td);
       });
       table.append(trTd);
-      this.library.append(table);
     });
+
+    return table;
   }
 
   addBookForm() {
@@ -227,6 +232,7 @@ class UI {
     const wrapData = addBookFormData.wrap;
     const wrap = document.createElement(wrapData.tag);
     wrap.className = wrapData.className;
+    wrap.id = wrapData.id;
 
     const formData = addBookFormData.form;
     const form = document.createElement(formData.tag);
@@ -275,6 +281,7 @@ class UI {
         const btn = document.createElement(value.tag);
         btn.className = value.className;
         btn.id = value.id;
+        btn.type = value.type;
         btn.textContent = value.text;
         form.append(btn);
       }
@@ -284,10 +291,7 @@ class UI {
     fieldsAdd();
     btnsAdd();
     wrap.append(form);
-    this.library.append(wrap);
-
-    //TODO remove plug after event addBookForm;
-    wrap.showModal();
+    return wrap;
   }
 
   addBookBtn() {
@@ -297,7 +301,7 @@ class UI {
     btn.id = btnData.id;
     btn.textContent = btnData.text;
 
-    this.library.append(btn);
+    return btn;
   }
 }
 
