@@ -1,6 +1,6 @@
 import data from './data.json';
 import './ui.scss';
-//TODO full refactor of the UI class.
+// TODO full refactor of the UI class.
 class UI {
   constructor() {
     this.library = document.createElement(data.library.tag);
@@ -15,42 +15,39 @@ class UI {
     if (props.id) tag.id = props.id;
     if (props.textContent) tag.textContent = props.textContent;
     if (props.type) tag.type = props.type;
+    if (props.htmlFor) tag.htmlFor = props.htmlFor;
     return tag;
   }
 
   static btnsDraw(key, value) {
-    const btnsData = data.viewModels.common.buttons;
-
-    const btnsKeys = Object.keys(btnsData);
-    const isRead = btnsKeys[0];
-    const actions = btnsKeys[1];
-
+    const { buttons } = data.viewModels.common;
+    const btns = Object.entries(buttons);
     switch (key) {
-      case isRead:
-        const isReadData = btnsData.isRead;
-        const isReadBtn = document.createElement(isReadData.tag);
+      case btns[0][0]: {
+        const isReadBtn = this.tag(btns[0][1]);
         if (value.textContent === 'true') {
-          //TODO change it to true after connect localData
-          isReadBtn.className = isReadData.yesClassName;
-          isReadBtn.textContent = isReadData.yesText;
-        } else if (value.textContent === 'false') {
-          //TODO change it to false after connect localData
-          isReadBtn.className = isReadData.noClassName;
-          isReadBtn.textContent = isReadData.noText;
+          isReadBtn.textContent = btns[0][1].text.true;
         }
-
-        value.innerHTML = '';
-        return value.append(isReadBtn);
-
-      case actions:
-        const actionData = btnsData.actions.common;
-        const actionBtn = this.tag(actionData);
-
-        const btns = btnsData.actions.individual;
-        for (let btn in btns) {
-          actionBtn.textContent = btns[btn].textContent;
-          value.append(actionBtn.cloneNode(true));
+        if (value.textContent === 'false') {
+          isReadBtn.textContent = btns[0][1].text.false;
         }
+        const element = value;
+        element.innerHTML = '';
+        element.append(isReadBtn);
+        break;
+      }
+      case btns[1][0]: {
+        const btnsData = Object.values(btns[1][1].text);
+        btnsData.map((text) => {
+          const actionBtn = this.tag(btns[1][1]);
+          actionBtn.textContent = text;
+          return value.append(actionBtn);
+        });
+        break;
+      }
+      default: {
+        break;
+      }
     }
   }
 
@@ -66,15 +63,15 @@ class UI {
       const viewData = data.settings.toggleView.view;
       const viewValues = Object.values(viewData.individual);
 
-      const wrap = this.constructor.tag(viewData.wrap);
+      const wrapper = this.constructor.tag(viewData.wrap);
 
       viewValues.map((type) => {
         const viewType = this.constructor.tag(viewData.common);
         viewType.id = type.id;
         viewType.textContent = type.textContent;
-        return wrap.append(viewType);
+        return wrapper.append(viewType);
       });
-      return wrap;
+      return wrapper;
     };
 
     const toggleView = () => {
@@ -102,8 +99,8 @@ class UI {
     const header = this.constructor.tag(headerData);
 
     const appendStatFields = () => {
-      const common = data.statistic.fields.common;
-      const individual = data.statistic.fields.individual;
+      const { common } = data.statistic.fields;
+      const { individual } = data.statistic.fields;
 
       const fieldsDescription = Object.values(individual);
       fieldsDescription.map((field) => {
@@ -127,7 +124,7 @@ class UI {
   }
 
   cardView(myLibrary) {
-    const cards = data.viewModels.cards;
+    const { cards } = data.viewModels;
 
     const shellData = cards.shell;
     const shell = this.constructor.tag(shellData);
@@ -154,9 +151,9 @@ class UI {
 
         string.append(title);
         string.append(value);
-        cover.append(string);
+        return cover.append(string);
       });
-      shell.append(cover);
+      return shell.append(cover);
     });
     return shell;
   }
@@ -190,8 +187,8 @@ class UI {
     myLibrary.map((book) => {
       const trTd = this.constructor.tag(trData);
 
-      const bookKeys = Object.keys(book);
-      bookKeys.map((key) => {
+      const bookHeaderKeys = Object.keys(book);
+      bookHeaderKeys.map((key) => {
         const tdData = tableData.td;
         const td = this.constructor.tag(tdData);
         td.textContent = book[key];
@@ -199,7 +196,7 @@ class UI {
 
         return trTd.append(td);
       });
-      table.append(trTd);
+      return table.append(trTd);
     });
 
     return table;
@@ -223,37 +220,37 @@ class UI {
     const fieldData = formFieldsData.wrap;
     const titleData = formFieldsData.title;
     const inputData = formFieldsData.input;
+    const fieldsInputData = formFieldsData.inputData;
 
     const fieldsAdd = () => {
-      const fieldSettings = formFieldsData.inputData;
-      for (let key in fieldSettings) {
-        const value = fieldSettings[key];
+      const inputs = Object.entries(fieldsInputData);
+      inputs.map((settings) => {
+        const setInputs = { ...settings[1] };
+        const setFields = { ...fieldData };
+        const setTitles = { ...titleData };
 
-        const field = this.constructor.tag(fieldData);
-        field.htmlFor = value.id;
+        setFields.htmlFor = setInputs.id;
+        const field = this.constructor.tag(setFields);
 
-        const title = this.constructor.tag(titleData);
-        title.textContent = value.name;
+        setTitles.textContent = settings[1].textContent;
+        const title = this.constructor.tag(setTitles);
 
-        const input = this.constructor.tag(inputData);
-        input.type = value.type;
+        setInputs.tag = inputData.tag;
+        delete setInputs.textContent;
+        const input = this.constructor.tag(setInputs);
 
-        if (value.className !== '') input.classList.add(value.className);
-        input.id = value.id;
-
-        field.append(title);
-        field.append(input);
-        form.append(field);
-      }
+        field.append(title, input);
+        return form.append(field);
+      });
     };
 
     const btnsAdd = () => {
       const btnsData = addBookFormData.buttons;
-      for (let key in btnsData) {
-        const value = btnsData[key];
-        const btn = this.constructor.tag(value);
-        form.append(btn);
-      }
+      const btns = Object.entries(btnsData);
+      btns.map((setting) => {
+        const btn = this.constructor.tag(setting[1]);
+        return form.append(btn);
+      });
     };
 
     form.append(header);
