@@ -14,10 +14,9 @@
     "toggleTheme": {
       "tag": "button",
       "className": "toggleTheme",
-      "idLight": "light",
-      "idDark": "dark",
+      "id": "light",
       "light": "Light Theme",
-      "dark": "Dark Theme"
+      "textContent": "Dark Theme"
     },
 
     "toggleView": {
@@ -270,14 +269,14 @@
     "buttons": {
       "save": {
         "tag": "button",
-        "text": "Save",
+        "textContent": "Save",
         "id": "save",
         "type": "submit",
         "className": "formBtn save"
       },
       "close": {
         "tag": "button",
-        "text": "Close",
+        "textContent": "Close",
         "id": "close",
         "type": "button",
         "className": "formBtn close"
@@ -289,7 +288,7 @@
     "tag": "button",
     "className": "addBookBtn",
     "id": "addBook",
-    "text": "Add Book"
+    "textContent": "Add Book"
   },
 
   "exampleBook": {
