@@ -9,95 +9,13 @@ class UI {
     document.body.append(this.library);
   }
 
-  settings() {
-    const wrapData = data.settings.wrap;
-
-    const wrap = document.createElement(wrapData.tag);
-    wrap.className = wrapData.className;
-
-    const themeData = data.settings.toggleTheme;
-
-    const toggleTheme = document.createElement(themeData.tag);
-    toggleTheme.className = themeData.className;
-    toggleTheme.id = themeData.idDark;
-    toggleTheme.textContent = themeData.dark;
-
-    const viewToggles = () => {
-      const viewData = data.settings.toggleView.view;
-      const viewValues = Object.values(viewData.individual);
-
-      const wrap = document.createElement(viewData.wrap.tag);
-      wrap.className = viewData.wrap.className;
-
-      viewValues.map((type) => {
-        const viewType = document.createElement(viewData.common.tag);
-        viewType.className = viewData.common.className;
-        viewType.id = type.id;
-        viewType.textContent = type.textContent;
-        return wrap.append(viewType);
-      });
-      return wrap;
-    };
-
-    const toggleView = () => {
-      const viewData = data.settings.toggleView;
-
-      const viewWrap = document.createElement(viewData.wrap.tag);
-      viewWrap.className = viewData.wrap.className;
-
-      const viewBtn = document.createElement(viewData.toggle.tag);
-      viewBtn.className = viewData.toggle.className;
-      viewBtn.id = viewData.toggle.id;
-      viewBtn.textContent = viewData.toggle.textContent;
-      const div = document.createElement('div');
-      viewWrap.append(viewBtn);
-      return viewWrap;
-    };
-
-    const dropdown = viewToggles();
-
-    wrap.append(toggleTheme);
-    wrap.append(toggleView());
-
-    return { wrap, dropdown };
-  }
-
-  statistic() {
-    const wrapData = data.statistic.wrap;
-    const casing = document.createElement(wrapData.tag);
-    casing.className = wrapData.className;
-
-    const headerData = data.statistic.header;
-    const header = document.createElement(headerData.tag);
-    header.className = headerData.className;
-    header.textContent = headerData.textContent;
-
-    const appendStatFields = () => {
-      const common = data.statistic.fields.common;
-      const individual = data.statistic.fields.individual;
-
-      const fieldsDescription = Object.values(individual);
-      fieldsDescription.map((field) => {
-        const wrap = document.createElement(common.wrap.tag);
-        wrap.className = common.wrap.className;
-
-        const title = document.createElement(common.title.tag);
-        title.className = common.title.className;
-        title.textContent = field.titleContent;
-
-        const value = document.createElement(common.value.tag);
-        value.className = common.value.className;
-        value.id = field.valueId;
-
-        wrap.append(title);
-        wrap.append(value);
-        return casing.append(wrap);
-      });
-    };
-
-    casing.append(header);
-    appendStatFields();
-    return casing;
+  static tag(props) {
+    const tag = document.createElement(props.tag);
+    if (props.className) tag.className = props.className;
+    if (props.id) tag.id = props.id;
+    if (props.textContent) tag.textContent = props.textContent;
+    if (props.type) tag.type = props.type;
+    return tag;
   }
 
   static btnsDraw(key, value) {
@@ -126,8 +44,7 @@ class UI {
 
       case actions:
         const actionData = btnsData.actions.common;
-        const actionBtn = document.createElement(actionData.tag);
-        actionBtn.className = actionData.className;
+        const actionBtn = this.tag(actionData);
 
         const btns = btnsData.actions.individual;
         for (let btn in btns) {
@@ -137,34 +54,101 @@ class UI {
     }
   }
 
+  settings() {
+    const wrapData = data.settings.wrap;
+    const wrap = this.constructor.tag(wrapData);
+
+    const themeData = data.settings.toggleTheme;
+
+    const toggleTheme = this.constructor.tag(themeData);
+
+    const viewToggles = () => {
+      const viewData = data.settings.toggleView.view;
+      const viewValues = Object.values(viewData.individual);
+
+      const wrap = this.constructor.tag(viewData.wrap);
+
+      viewValues.map((type) => {
+        const viewType = this.constructor.tag(viewData.common);
+        viewType.id = type.id;
+        viewType.textContent = type.textContent;
+        return wrap.append(viewType);
+      });
+      return wrap;
+    };
+
+    const toggleView = () => {
+      const viewData = data.settings.toggleView;
+      const viewWrap = this.constructor.tag(viewData.wrap);
+
+      const viewBtn = this.constructor.tag(viewData.toggle);
+      viewWrap.append(viewBtn);
+      return viewWrap;
+    };
+
+    const dropdown = viewToggles();
+
+    wrap.append(toggleTheme);
+    wrap.append(toggleView());
+
+    return { wrap, dropdown };
+  }
+
+  statistic() {
+    const wrapData = data.statistic.wrap;
+    const casing = this.constructor.tag(wrapData);
+
+    const headerData = data.statistic.header;
+    const header = this.constructor.tag(headerData);
+
+    const appendStatFields = () => {
+      const common = data.statistic.fields.common;
+      const individual = data.statistic.fields.individual;
+
+      const fieldsDescription = Object.values(individual);
+      fieldsDescription.map((field) => {
+        const wrap = this.constructor.tag(common.wrap);
+
+        const title = this.constructor.tag(common.title);
+        title.textContent = field.titleContent;
+
+        const value = this.constructor.tag(common.value);
+        value.id = field.valueId;
+
+        wrap.append(title);
+        wrap.append(value);
+        return casing.append(wrap);
+      });
+    };
+
+    casing.append(header);
+    appendStatFields();
+    return casing;
+  }
+
   cardView(myLibrary) {
     const cards = data.viewModels.cards;
 
     const shellData = cards.shell;
-    const shell = document.createElement(shellData.tag);
-    shell.className = shellData.className;
-    shell.id = shellData.id;
+    const shell = this.constructor.tag(shellData);
 
     myLibrary.map((book) => {
       const coverData = cards.cover;
-      const cover = document.createElement(coverData.tag);
-      cover.className = coverData.className;
+      const cover = this.constructor.tag(coverData);
 
       const bookKeys = Object.keys(book);
       bookKeys.map((key) => {
         const stringData = cards.field;
-        const string = document.createElement(stringData.tag);
-        string.className = stringData.className;
+        const string = this.constructor.tag(stringData);
 
         const titleData = cards.title;
-        const title = document.createElement(titleData.tag);
-        title.className = titleData.className;
+        const title = this.constructor.tag(titleData);
+
         const headersData = data.viewModels.common.headers;
         title.textContent = headersData[key];
 
         const valueData = cards.value;
-        const value = document.createElement(valueData.tag);
-        value.className = valueData.className;
+        const value = this.constructor.tag(valueData);
         value.textContent = book[key];
         this.constructor.btnsDraw(key, value);
 
@@ -181,14 +165,11 @@ class UI {
     const tableData = data.viewModels.table;
 
     const tableTagData = data.viewModels.table.table;
-    const table = document.createElement(tableTagData.tag);
-    table.className = tableTagData.className;
-    table.id = tableTagData.id;
+    const table = this.constructor.tag(tableTagData);
 
     const trData = tableData.tr;
 
-    const trTh = document.createElement(trData.tag);
-    trTh.className = trData.className;
+    const trTh = this.constructor.tag(trData);
 
     const bookKeys = Object.keys(myLibrary[0]);
     const headersData = data.viewModels.common.headers;
@@ -207,14 +188,12 @@ class UI {
     table.append(trTh);
 
     myLibrary.map((book) => {
-      const trTd = document.createElement(trData.tag);
-      trTd.className = trData.className;
+      const trTd = this.constructor.tag(trData);
 
       const bookKeys = Object.keys(book);
       bookKeys.map((key) => {
         const tdData = tableData.td;
-        const td = document.createElement(tdData.tag);
-        td.className = tdData.className;
+        const td = this.constructor.tag(tdData);
         td.textContent = book[key];
         this.constructor.btnsDraw(key, td);
 
@@ -230,18 +209,15 @@ class UI {
     const addBookFormData = data.addBookForm;
 
     const wrapData = addBookFormData.wrap;
-    const wrap = document.createElement(wrapData.tag);
+    const wrap = this.constructor.tag(wrapData);
     wrap.className = wrapData.className;
     wrap.id = wrapData.id;
 
     const formData = addBookFormData.form;
-    const form = document.createElement(formData.tag);
-    form.className = formData.className;
+    const form = this.constructor.tag(formData);
 
     const headerData = addBookFormData.title;
-    const header = document.createElement(headerData.tag);
-    header.className = headerData.className;
-    header.textContent = headerData.textContent;
+    const header = this.constructor.tag(headerData);
 
     const formFieldsData = addBookFormData.field;
     const fieldData = formFieldsData.wrap;
@@ -253,17 +229,14 @@ class UI {
       for (let key in fieldSettings) {
         const value = fieldSettings[key];
 
-        const field = document.createElement(fieldData.tag);
-        field.className = fieldData.className;
+        const field = this.constructor.tag(fieldData);
         field.htmlFor = value.id;
 
-        const title = document.createElement(titleData.tag);
-        title.className = titleData.className;
+        const title = this.constructor.tag(titleData);
         title.textContent = value.name;
 
-        const input = document.createElement(inputData.tag);
+        const input = this.constructor.tag(inputData);
         input.type = value.type;
-        input.className = inputData.className;
 
         if (value.className !== '') input.classList.add(value.className);
         input.id = value.id;
@@ -278,11 +251,7 @@ class UI {
       const btnsData = addBookFormData.buttons;
       for (let key in btnsData) {
         const value = btnsData[key];
-        const btn = document.createElement(value.tag);
-        btn.className = value.className;
-        btn.id = value.id;
-        btn.type = value.type;
-        btn.textContent = value.text;
+        const btn = this.constructor.tag(value);
         form.append(btn);
       }
     };
@@ -296,11 +265,7 @@ class UI {
 
   addBookBtn() {
     const btnData = data.addBookBtn;
-    const btn = document.createElement(btnData.tag);
-    btn.className = btnData.className;
-    btn.id = btnData.id;
-    btn.textContent = btnData.text;
-
+    const btn = this.constructor.tag(btnData);
     return btn;
   }
 }
