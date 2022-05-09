@@ -26,7 +26,7 @@
         "className": "dropdown"
       },
       "toggle": {
-        "tag": "button",
+        "tag": "span",
         "className": "toggleView",
         "id": "toggleView",
         "textContent": "Change Book View"
@@ -197,7 +197,8 @@
   "addBookForm": {
     "wrap": {
       "tag": "dialog",
-      "className": "dialog"
+      "className": "dialog",
+      "id": "form"
     },
     "form": {
       "tag": "form",
@@ -271,12 +272,14 @@
         "tag": "button",
         "text": "Save",
         "id": "save",
+        "type": "submit",
         "className": "formBtn save"
       },
       "close": {
         "tag": "button",
         "text": "Close",
         "id": "close",
+        "type": "button",
         "className": "formBtn close"
       }
     }
