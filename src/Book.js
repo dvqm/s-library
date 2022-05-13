@@ -2,21 +2,20 @@ import data from './data.json';
 
 class Book {
   constructor() {
-    const getFormData = (id) => {
+    const getFormData = (id, property) => {
       const element = document.getElementById(id);
-      this.book[id] = element.value;
+      this[id] = element[property];
     };
 
     const field = data.addBookForm.field.inputData;
 
-    this.book = {};
-    getFormData(field.author.id);
-    getFormData(field.title.id);
-    getFormData(field.pages.id);
-    getFormData(field.publish.id);
-    getFormData(field.start.id);
-    getFormData(field.finish.id);
-    getFormData(field.isRead.id);
+    getFormData(field.author.id, 'value');
+    getFormData(field.title.id, 'value');
+    getFormData(field.pages.id, 'value');
+    getFormData(field.publish.id, 'value');
+    getFormData(field.start.id, 'value');
+    getFormData(field.finish.id, 'value');
+    getFormData(field.isRead.id, 'checked');
   }
 }
 export default Book;
