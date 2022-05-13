@@ -255,7 +255,7 @@
         "tag": "button",
         "textContent": "Save",
         "id": "save",
-        "type": "submit",
+        "type": "button",
         "className": "formBtn save"
       },
       "close": {
@@ -276,7 +276,6 @@
   },
 
   "exampleBook": {
-    "id": "mb-1",
     "author": "Good guy",
     "title": "Best Seller",
     "pages": "823",
@@ -284,7 +283,6 @@
     "start": "2022-01-11",
     "finish": "2022-02-28",
     "isRead": false,
-    "created": "2021-09-20 23:59:59",
     "actions": null
   }
 }
