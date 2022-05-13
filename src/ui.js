@@ -172,14 +172,15 @@ class UI {
 
     const bookKeys = Object.keys(myLibrary[0]);
     const headersData = data.viewModels.common.headers;
+    const headers = Object.keys(headersData);
 
-    bookKeys.map((key) => {
+    headers.map((header) => {
       const thData = tableData.th;
       const th = document.createElement(thData.tag);
       th.className = thData.className;
 
-      const header = headersData[key].slice(0, -2);
-      th.textContent = header;
+      const title = headersData[header].slice(0, -2);
+      th.textContent = title;
 
       return trTh.append(th);
     });
@@ -189,12 +190,11 @@ class UI {
     myLibrary.map((book) => {
       const trTd = this.constructor.tag(trData);
 
-      const bookHeaderKeys = Object.keys(book);
-      bookHeaderKeys.map((key) => {
+      headers.map((header) => {
         const tdData = tableData.td;
         const td = this.constructor.tag(tdData);
-        td.textContent = book[key];
-        this.constructor.btnsDraw(key, td);
+        td.textContent = book[header];
+        this.constructor.btnsDraw(header, td);
 
         return trTd.append(td);
       });
