@@ -51,7 +51,20 @@ class UI {
     }
   }
 
-  settings() {
+  selectView(book) {
+    const view = document.querySelector('#view');
+    const cards = data.viewModels.cards.shell.className;
+    const table = data.viewModels.table.table.className;
+    const models = [cards, table];
+
+    const element = models.filter((model) => {
+      const compare = view.classList.contains(model);
+      return compare;
+    });
+    return this[element].setBook(book);
+  }
+
+  get settings() {
     const wrapData = data.settings.wrap;
     const wrap = this.constructor.tag(wrapData);
 
@@ -91,7 +104,7 @@ class UI {
     return { wrap, dropdown };
   }
 
-  statistic() {
+  get statistic() {
     const wrapData = data.statistic.wrap;
     const casing = this.constructor.tag(wrapData);
 
@@ -123,7 +136,7 @@ class UI {
     return casing;
   }
 
-  cardView() {
+  get cardView() {
     const { cards } = data.viewModels;
 
     const setBook = (book) => {
@@ -168,7 +181,7 @@ class UI {
     return { set, setBook };
   }
 
-  tableView() {
+  get tableView() {
     const tableData = data.viewModels.table;
     const headersData = data.viewModels.common.headers;
     const headers = Object.keys(headersData);
@@ -223,20 +236,7 @@ class UI {
     return { set, setBook };
   }
 
-  selectView(book) {
-    const view = document.querySelector('#view');
-    const cards = data.viewModels.cards.shell.className;
-    const table = data.viewModels.table.table.className;
-    const models = [cards, table];
-
-    const element = models.filter((model) => {
-      const compare = view.classList.contains(model);
-      return compare;
-    });
-    return this[element]().setBook(book);
-  }
-
-  addBookForm() {
+  get addBookForm() {
     const addBookFormData = data.addBookForm;
 
     const wrapData = addBookFormData.wrap;
@@ -294,7 +294,7 @@ class UI {
     return wrap;
   }
 
-  addBookBtn() {
+  get addBookBtn() {
     const btnData = data.addBookBtn;
     const btn = this.constructor.tag(btnData);
     return btn;
