@@ -11,9 +11,7 @@ class Model {
   static setDate(book) {
     const curDate = new Date();
     const bookCopy = book;
-    bookCopy.created = `${curDate.getFullYear()} -${curDate.getMonth()} -${
-      curDate.getDay
-    } : ${curDate.getHours()} -${curDate.getMinutes()}`;
+    bookCopy.created = `${curDate.getFullYear()}-${curDate.getMonth()}-${curDate.getDay()}`;
     return bookCopy;
   }
 
@@ -35,14 +33,6 @@ class Model {
     library.push(book);
     const libToString = JSON.stringify(library);
     localStorage.setItem('library', libToString);
-  }
-
-  plugBook(count) {
-    const bookData = data.exampleBook;
-    for (let i = 0; i < count; i++) {
-      this.addBook(bookData);
-    }
-    console.log(JSON.parse(localStorage.getItem('library')));
   }
 }
 
