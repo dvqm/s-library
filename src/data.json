@@ -273,16 +273,5 @@
     "className": "addBookBtn",
     "id": "addBook",
     "textContent": "Add Book"
-  },
-
-  "exampleBook": {
-    "author": "Good guy",
-    "title": "Best Seller",
-    "pages": "823",
-    "publish": "2021-12-31",
-    "start": "2022-01-11",
-    "finish": "2022-02-28",
-    "isRead": false,
-    "actions": null
   }
 }
