@@ -1,42 +1,31 @@
 import UI from './UI';
-import Shelve from './Model';
+import Book from './Book';
+import Model from './Model';
 import UiCreator from './UiCreator';
 import EventCreator from './EventCreator';
 
-const myLibrary = [];
-const deletedBooks = [];
-
 const ui = new UI();
-const shelve = new Shelve(myLibrary, deletedBooks);
-
-shelve.plugBook();
-shelve.plugBook();
-shelve.plugBook();
+const shelve = new Model();
+// shelve.plugBook(10);
+// localStorage.removeItem('library');
 
 const mainPage = new UiCreator(
   '#library',
   ui.settings().wrap,
   ui.statistic(),
-  ui.cardView(myLibrary),
+  ui.cardView(shelve.library),
   ui.addBookBtn(),
 );
 
 mainPage.render();
 
-const bookBtn = new EventCreator({
-  element: '#addBook',
-  target: '#addBook',
-  inject: 'after',
+const formSaveBtn = new EventCreator({
+  element: '#save',
   type: 'click',
   eventOptions: { once: true },
-  replaceAfterEvent: '#addBook',
-  ui() {
-    return ui.addBookForm();
-  },
   nextAction() {
-    const dialog = document.querySelector('#form');
-    dialog.showModal();
-    formCloseBtn.event().add();
+    const book = new Book();
+    shelve.addBook(book);
   },
 });
 
@@ -55,8 +44,25 @@ const formCloseBtn = new EventCreator({
   },
 });
 
-bookBtn.event().add();
+const bookBtn = new EventCreator({
+  element: '#addBook',
+  target: '#addBook',
+  inject: 'after',
+  type: 'click',
+  eventOptions: { once: true },
+  replaceAfterEvent: '#addBook',
+  ui() {
+    return ui.addBookForm();
+  },
+  nextAction() {
+    const dialog = document.querySelector('#form');
+    dialog.showModal();
+    formCloseBtn.event().add();
+    formSaveBtn.event().add();
+  },
+});
 
+bookBtn.event().add();
 const card = new EventCreator({
   element: '#toggleCard',
   target: '.statistic',
@@ -64,7 +70,7 @@ const card = new EventCreator({
   type: 'click',
   replaceBeforeEvent: '#view',
   ui() {
-    return ui.cardView(myLibrary);
+    return ui.cardView(shelve.library);
   },
 });
 
@@ -75,7 +81,7 @@ const table = new EventCreator({
   type: 'click',
   replaceBeforeEvent: '#view',
   ui() {
-    return ui.tableView(myLibrary);
+    return ui.tableView(shelve.library);
   },
 });
 
