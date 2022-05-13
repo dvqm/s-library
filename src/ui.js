@@ -168,35 +168,31 @@ class UI {
     return { set, setBook };
   }
 
-  tableView(myLibrary) {
+  tableView() {
     const tableData = data.viewModels.table;
-
-    const tableTagData = data.viewModels.table.table;
-    const table = this.constructor.tag(tableTagData);
-
-    const trData = tableData.tr;
-
-    const trTh = this.constructor.tag(trData);
-
-    const bookKeys = Object.keys(myLibrary[0]);
     const headersData = data.viewModels.common.headers;
     const headers = Object.keys(headersData);
+    const trData = tableData.tr;
 
-    headers.map((header) => {
+    const setHeaders = () => {
+      const tr = this.constructor.tag(trData);
       const thData = tableData.th;
-      const th = document.createElement(thData.tag);
-      th.className = thData.className;
 
-      const title = headersData[header].slice(0, -2);
-      th.textContent = title;
+      headers.map((header) => {
+        const th = document.createElement(thData.tag);
+        th.className = thData.className;
 
-      return trTh.append(th);
-    });
+        const title = headersData[header].slice(0, -2);
+        th.textContent = title;
 
-    table.append(trTh);
+        return tr.append(th);
+      });
 
-    myLibrary.map((book) => {
-      const trTd = this.constructor.tag(trData);
+      return tr;
+    };
+
+    const setBook = (book) => {
+      const tr = this.constructor.tag(trData);
 
       headers.map((header) => {
         const tdData = tableData.td;
@@ -204,12 +200,40 @@ class UI {
         td.textContent = book[header];
         this.constructor.btnsDraw(header, td);
 
-        return trTd.append(td);
+        return tr.append(td);
       });
-      return table.append(trTd);
-    });
 
-    return table;
+      return tr;
+    };
+
+    const set = (myLibrary) => {
+      const tableTagData = data.viewModels.table.table;
+      const table = this.constructor.tag(tableTagData);
+
+      const titles = setHeaders();
+      table.append(titles);
+
+      myLibrary.map((book) => {
+        const tr = setBook(book);
+        return table.append(tr);
+      });
+      return table;
+    };
+
+    return { set, setBook };
+  }
+
+  selectView(book) {
+    const view = document.querySelector('#view');
+    const cards = data.viewModels.cards.shell.className;
+    const table = data.viewModels.table.table.className;
+    const models = [cards, table];
+
+    const element = models.filter((model) => {
+      const compare = view.classList.contains(model);
+      return compare;
+    });
+    return this[element]().setBook(book);
   }
 
   addBookForm() {
