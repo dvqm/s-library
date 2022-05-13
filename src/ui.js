@@ -133,26 +133,28 @@ class UI {
       const coverData = cards.cover;
       const cover = this.constructor.tag(coverData);
 
-      const bookKeys = Object.keys(book);
-      bookKeys.map((key) => {
+      const headersData = data.viewModels.common.headers;
+
+      const headers = Object.keys(headersData);
+
+      headers.map((header) => {
         const stringData = cards.field;
         const string = this.constructor.tag(stringData);
 
         const titleData = cards.title;
         const title = this.constructor.tag(titleData);
-
-        const headersData = data.viewModels.common.headers;
-        title.textContent = headersData[key];
+        title.textContent = headersData[header];
 
         const valueData = cards.value;
         const value = this.constructor.tag(valueData);
-        value.textContent = book[key];
-        this.constructor.btnsDraw(key, value);
+        value.textContent = book[header];
+        this.constructor.btnsDraw(header, value);
 
         string.append(title);
         string.append(value);
         return cover.append(string);
       });
+
       return shell.append(cover);
     });
     return shell;
