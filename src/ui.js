@@ -123,13 +123,10 @@ class UI {
     return casing;
   }
 
-  cardView(myLibrary) {
+  cardView() {
     const { cards } = data.viewModels;
 
-    const shellData = cards.shell;
-    const shell = this.constructor.tag(shellData);
-
-    myLibrary.map((book) => {
+    const setBook = (book) => {
       const coverData = cards.cover;
       const cover = this.constructor.tag(coverData);
 
@@ -152,12 +149,23 @@ class UI {
 
         string.append(title);
         string.append(value);
-        return cover.append(string);
+        cover.append(string);
       });
+      return cover;
+    };
 
-      return shell.append(cover);
-    });
-    return shell;
+    const set = (myLibrary) => {
+      const shellData = cards.shell;
+      const shell = this.constructor.tag(shellData);
+
+      myLibrary.map((book) => {
+        const card = setBook(book);
+        return shell.append(card);
+      });
+      return shell;
+    };
+
+    return { set, setBook };
   }
 
   tableView(myLibrary) {
