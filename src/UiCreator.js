@@ -9,6 +9,13 @@ class UiCreator {
       this.element.append(i);
     });
   }
+
+  insert(index) {
+    const elements = this.element.childNodes;
+    return this.rest.forEach((i) => {
+      this.element.replaceChild(i, elements[index]);
+    });
+  }
 }
 
 export default UiCreator;
