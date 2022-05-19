@@ -128,7 +128,7 @@ class UI {
     const shellData = cards.shell;
     const shell = this.constructor.tag(shellData);
 
-    const book = (book) => {
+    const book = (card) => {
       const coverData = cards.cover;
       const cover = this.constructor.tag(coverData);
 
@@ -146,7 +146,7 @@ class UI {
 
         const valueData = cards.value;
         const value = this.constructor.tag(valueData);
-        value.textContent = book[header];
+        value.textContent = card[header];
         this.constructor.btnsDraw(header, value);
 
         string.append(title);
@@ -182,13 +182,13 @@ class UI {
       return tr;
     };
 
-    const setBook = (book) => {
+    const book = (row) => {
       const tr = this.constructor.tag(trData);
 
       headers.map((header) => {
         const tdData = tableData.td;
         const td = this.constructor.tag(tdData);
-        td.textContent = book[header];
+        td.textContent = row[header];
         this.constructor.btnsDraw(header, td);
 
         return tr.append(td);
@@ -197,21 +197,13 @@ class UI {
       return tr;
     };
 
-    const set = (myLibrary) => {
-      const tableTagData = data.viewModels.table.table;
-      const table = this.constructor.tag(tableTagData);
+    const tableTagData = data.viewModels.table.table;
+    const shell = this.constructor.tag(tableTagData);
 
-      const titles = setHeaders();
-      table.append(titles);
+    const titles = setHeaders();
+    shell.append(titles);
 
-      myLibrary.map((book) => {
-        const tr = setBook(book);
-        return table.append(tr);
-      });
-      return table;
-    };
-
-    return { set, setBook };
+    return { shell, book };
   }
 
   get addBookForm() {
