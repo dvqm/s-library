@@ -51,19 +51,6 @@ class UI {
     }
   }
 
-  selectView(book) {
-    const view = document.querySelector('#view');
-    const cards = data.viewModels.cards.shell.className;
-    const table = data.viewModels.table.table.className;
-    const models = [cards, table];
-
-    const element = models.filter((model) => {
-      const compare = view.classList.contains(model);
-      return compare;
-    });
-    return this[element].setBook(book);
-  }
-
   get settings() {
     const wrapData = data.settings.wrap;
     const wrap = this.constructor.tag(wrapData);
