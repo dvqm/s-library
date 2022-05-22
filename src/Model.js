@@ -1,13 +1,6 @@
 import data from './data.json';
 
 class Model {
-  static setId(book) {
-    const library = this.getLibrary();
-    const bookCopy = book;
-    bookCopy.id = `mb-${library.length + 1}`;
-    return bookCopy;
-  }
-
   static setDate(book) {
     const curDate = new Date();
     const bookCopy = book;
@@ -22,13 +15,29 @@ class Model {
     return library;
   }
 
+  set library(newLibrary) {
+    this.lib = JSON.stringify(newLibrary);
+    localStorage.setItem('library', this.lib);
+  }
+
   get library() {
     return this.constructor.getLibrary();
   }
 
-  addBook(book) {
+  remove(index) {
     const library = this.constructor.getLibrary();
-    this.constructor.setId(book);
+    library.splice(index, 1);
+    this.library = library;
+  }
+
+  update(newBook, index) {
+    const library = this.constructor.getLibrary();
+    library[index] = newBook;
+    this.library = library;
+  }
+
+  add(book) {
+    const library = this.constructor.getLibrary();
     this.constructor.setDate(book);
     library.push(book);
     const libToString = JSON.stringify(library);
