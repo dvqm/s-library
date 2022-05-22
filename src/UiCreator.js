@@ -16,6 +16,11 @@ class UiCreator {
       this.element.replaceChild(i, elements[index]);
     });
   }
+
+  remove(index) {
+    const elements = this.element.childNodes;
+    elements[index].remove();
+  }
 }
 
 export default UiCreator;
