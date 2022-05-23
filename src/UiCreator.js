@@ -1,24 +1,24 @@
 class UiCreator {
-  constructor(element, ...rest) {
-    this.element = document.querySelector(element);
+  constructor(node, ...rest) {
+    this.node = node;
     this.rest = [...rest];
   }
 
   render() {
     return this.rest.forEach((i) => {
-      this.element.append(i);
+      this.node.append(i);
     });
   }
 
   insert(index) {
-    const elements = this.element.childNodes;
+    const elements = this.node.childNodes;
     return this.rest.forEach((i) => {
-      this.element.replaceChild(i, elements[index]);
+      this.node.replaceChild(i, elements[index]);
     });
   }
 
   remove(index) {
-    const elements = this.element.childNodes;
+    const elements = this.node.childNodes;
     elements[index].remove();
   }
 }
