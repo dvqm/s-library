@@ -1,5 +1,3 @@
-import data from './data.json';
-
 class Model {
   static setDate(book) {
     const curDate = new Date();
