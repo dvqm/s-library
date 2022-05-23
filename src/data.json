@@ -103,7 +103,6 @@
   "viewModels": {
     "common": {
       "headers": {
-        "id": "Book id: ",
         "author": "Author: ",
         "title": "Book title: ",
         "pages": "Number of pages: ",
@@ -137,8 +136,8 @@
     "cards": {
       "shell": {
         "tag": "div",
-        "className": "cardsView",
-        "id": "view"
+        "className": "cardView",
+        "id": "cards"
       },
       "cover": {
         "tag": "div",
@@ -161,7 +160,7 @@
       "table": {
         "tag": "table",
         "className": "tableView",
-        "id": "view"
+        "id": "table"
       },
       "tr": {
         "tag": "tr",
