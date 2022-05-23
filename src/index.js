@@ -2,113 +2,151 @@ import UI from './UI';
 import Book from './Book';
 import Model from './Model';
 import UiCreator from './UiCreator';
-import EventCreator from './EventCreator';
 
 const ui = new UI();
-const shelve = new Model();
-// shelve.plugBook(10);
+const tools = new Model();
 // localStorage.removeItem('library');
 
-const mainPage = new UiCreator(
-  '#library',
-  ui.settings().wrap,
-  ui.statistic(),
-  ui.cardView(shelve.library),
-  ui.addBookBtn(),
-);
+const bookEvents = (node, book) => {
+  const card = node.book(book);
 
-mainPage.render();
+  const getIndex = (e) => {
+    const poinedCard = e.path.filter((el) => el === card)[0];
+    const index = [...node.shell.children].indexOf(poinedCard);
+    return index;
+  };
 
-const formSaveBtn = new EventCreator({
-  element: '#save',
-  type: 'click',
-  eventOptions: { once: true },
-  nextAction() {
+  const indexOffset = (e, i, n) => {
+    if (e.path.some((el) => el.id === 'table')) {
+      return i + n;
+    }
+    return i;
+  };
+
+  const isReadAction = (e) => {
+    const newBook = { ...book };
+    newBook.isRead = !newBook.isRead;
+
+    let index = getIndex(e);
+
+    const updatedBook = new UiCreator(node.shell, bookEvents(node, newBook));
+    updatedBook.insert(index);
+
+    index = indexOffset(e, index, -1);
+    tools.update(newBook, index);
+  };
+
+  const isRead = card.querySelector('.isRead');
+  isRead.addEventListener('click', isReadAction);
+
+  const deleteAction = (e) => {
+    let index = getIndex(e);
+    const deletedBook = new UiCreator(node.shell, bookEvents(node, book));
+    deletedBook.remove(index);
+    index = indexOffset(e, index, -1);
+    tools.remove(index);
+  };
+
+  const actionBtns = card.querySelectorAll('.actionBtn');
+  const editBtn = actionBtns[0];
+  const deleteBtn = actionBtns[1];
+  deleteBtn.addEventListener('click', deleteAction);
+
+  return card;
+};
+
+const modelView = (node) => {
+  const view = node.shell;
+  const { library } = tools;
+
+  library.map((b) => {
+    const book = bookEvents(node, b);
+    return view.append(book);
+  });
+  return view;
+};
+
+const settings = (node) => {
+  const target = node.wrap.querySelector('.toggleView');
+
+  const cardSet = () => {
+    const sibling = document.querySelector('.statistic');
+    sibling.nextSibling.remove();
+    ui.view = ui.cardView;
+    sibling.after(modelView(ui.view));
+  };
+
+  const tableSet = () => {
+    const sibling = document.querySelector('.statistic');
+    sibling.nextSibling.remove();
+    ui.view = ui.tableView;
+    sibling.after(modelView(ui.view));
+  };
+
+  const closeDropdown = () => {
+    node.dropdown.remove();
+  };
+
+  const openDropdown = () => {
+    target.after(node.dropdown);
+    node.dropdown.addEventListener('mouseleave', closeDropdown, { once: true });
+
+    const cardBtn = node.dropdown.querySelector('#toggleCard');
+    cardBtn.addEventListener('click', cardSet);
+
+    const tableBtn = node.dropdown.querySelector('#toggleTable');
+    tableBtn.addEventListener('click', tableSet);
+  };
+
+  target.addEventListener('mouseenter', openDropdown);
+  return node.wrap;
+};
+
+const addBookForm = (node) => {
+  const bookBtn = new UiCreator(ui.library, addBookBtn(ui.addBookBtn));
+
+  const close = () => {
+    node.close();
+    bookBtn.render();
     const book = new Book();
-    shelve.addBook(book);
-  },
-});
+    book.clear();
+  };
 
-const formCloseBtn = new EventCreator({
-  element: '#close',
-  target: '#library',
-  inject: 'append',
-  type: 'click',
-  replaceAfterEvent: '#form',
-  eventOptions: { once: true },
-  ui() {
-    return ui.addBookBtn();
-  },
-  nextAction() {
-    bookBtn.event().add();
-  },
-});
+  const save = () => {
+    const newBook = new Book();
+    tools.add(newBook);
+    const book = new UiCreator(ui.view.shell, bookEvents(ui.view, newBook));
+    book.render();
+    close();
+  };
 
-const bookBtn = new EventCreator({
-  element: '#addBook',
-  target: '#addBook',
-  inject: 'after',
-  type: 'click',
-  eventOptions: { once: true },
-  replaceAfterEvent: '#addBook',
-  ui() {
-    return ui.addBookForm();
-  },
-  nextAction() {
-    const dialog = document.querySelector('#form');
-    dialog.showModal();
-    formCloseBtn.event().add();
-    formSaveBtn.event().add();
-  },
-});
+  const closeBtn = node.querySelector('#close');
+  closeBtn.addEventListener('click', close);
+  node.addEventListener('cancel', close);
 
-bookBtn.event().add();
-const card = new EventCreator({
-  element: '#toggleCard',
-  target: '.statistic',
-  inject: 'after',
-  type: 'click',
-  replaceBeforeEvent: '#view',
-  ui() {
-    return ui.cardView(shelve.library);
-  },
-});
+  const saveBtn = node.querySelector('#save');
+  saveBtn.addEventListener('click', save);
 
-const table = new EventCreator({
-  element: '#toggleTable',
-  target: '.statistic',
-  inject: 'after',
-  type: 'click',
-  replaceBeforeEvent: '#view',
-  ui() {
-    return ui.tableView(shelve.library);
-  },
-});
+  return node;
+};
 
-const toggleViewFold = new EventCreator({
-  element: '.dropdown',
-  replaceAfterEvent: '.dropdown-content',
-  type: 'mouseleave',
-  eventOptions: { once: true },
-  nextAction() {
-    toggleViewUnfold.event().add();
-  },
-});
+const addBookBtn = (node) => {
+  const openForm = () => {
+    const form = document.querySelector('#form');
+    form.showModal();
+    node.remove();
+  };
 
-const toggleViewUnfold = new EventCreator({
-  element: '#toggleView',
-  target: '#toggleView',
-  inject: 'after',
-  type: 'mouseenter',
-  eventOptions: { once: true },
-  ui() {
-    return ui.settings().dropdown;
-  },
-  nextAction() {
-    toggleViewFold.event().add();
-    table.event().add();
-    card.event().add();
-  },
-});
+  node.addEventListener('click', openForm);
+  return node;
+};
 
-toggleViewUnfold.event().add();
+const mainPage = new UiCreator(
+  ui.library,
+  settings(ui.settings),
+  ui.statistic,
+  modelView(ui.view),
+  addBookForm(ui.addBookForm),
+  addBookBtn(ui.addBookBtn)
+);
+mainPage.render();
