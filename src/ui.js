@@ -3,6 +3,7 @@ import './ui.scss';
 // TODO full refactor of the UI class.
 class UI {
   constructor() {
+    this.view = this.cardView;
     this.library = document.createElement(data.library.tag);
     this.library.className = data.library.className;
     this.library.id = data.library.id;
