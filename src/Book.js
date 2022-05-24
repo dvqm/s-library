@@ -28,5 +28,17 @@ class Book {
       input.checked = false;
     });
   }
+
+  edit(book) {
+    const pocket = data.viewModels.common;
+    const fields = book.querySelectorAll(`.${pocket.input.className}`);
+    this.author = fields[0].value;
+    this.title = fields[1].value;
+    this.pages = fields[2].value;
+    this.publish = fields[3].value;
+    this.start = fields[4].value;
+    this.finish = fields[5].value;
+    this.isRead = fields[6].checked;
+  }
 }
 export default Book;
