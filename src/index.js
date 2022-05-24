@@ -1,13 +1,9 @@
 import UI from './ui';
-
 import Book from './Book';
-
 import Model from './Model';
-
 import UiCreator from './UiCreator';
 
 const ui = new UI();
-
 const tools = new Model();
 
 // localStorage.removeItem('library');
@@ -15,20 +11,12 @@ const tools = new Model();
 const bookEvents = (node, book) => {
   const card = node.book(book);
 
-  const getIndex = (e) => {
-    const poinedCard = e.path.filter((el) => el === card)[0];
+  const getIndex = (e, offset = 0) => {
+    const pointedCard = e.path.filter((el) => el === card)[0];
 
-    const index = [...node.shell.children].indexOf(poinedCard);
+    const index = [...node.shell.children].indexOf(pointedCard);
 
-    return index;
-  };
-
-  const indexOffset = (e, i, n) => {
-    if (e.path.some((el) => el.id === 'table')) {
-      return i + n;
-    }
-
-    return i;
+    return index + offset;
   };
 
   const isReadAction = (e) => {
@@ -42,7 +30,7 @@ const bookEvents = (node, book) => {
 
     updatedBook.insert(index);
 
-    index = indexOffset(e, index, -1);
+    index = getIndex(e, -1);
 
     tools.update(newBook, index);
   };
@@ -51,6 +39,51 @@ const bookEvents = (node, book) => {
 
   isRead.addEventListener('click', isReadAction);
 
+  const editAction = (e) => {
+    const editBook = node.shell.children[getIndex(e)];
+    ui.editCard(editBook);
+
+    const save = () => {
+      const newBook = new Book();
+
+      newBook.edit(editBook);
+
+      let index = getIndex(e);
+
+      index = getIndex(e, -1);
+
+      tools.update(newBook, index);
+
+      const updatedBook = new UiCreator(
+        ui.view.shell,
+        bookEvents(ui.view, tools.library[index])
+      );
+
+      index = getIndex(e);
+
+      updatedBook.insert(index);
+    };
+
+    const close = () => {
+      let index = getIndex(e);
+      if (node.shell.id === 'table') index = getIndex(e, -1);
+
+      const oldBook = new UiCreator(
+        node.shell,
+        bookEvents(node, tools.library[index])
+      );
+
+      index = getIndex(e);
+      oldBook.insert(index);
+    };
+
+    const saveBtn = editBook.querySelector('.save');
+    saveBtn.addEventListener('click', save);
+
+    const closeBtn = editBook.querySelector('.cancel');
+    closeBtn.addEventListener('click', close);
+  };
+
   const deleteAction = (e) => {
     let index = getIndex(e);
 
@@ -58,7 +91,7 @@ const bookEvents = (node, book) => {
 
     deletedBook.remove(index);
 
-    index = indexOffset(e, index, -1);
+    index = getIndex(e, -1);
 
     tools.remove(index);
   };
@@ -66,6 +99,8 @@ const bookEvents = (node, book) => {
   const actionBtns = card.querySelectorAll('.actionBtn');
 
   const editBtn = actionBtns[0];
+
+  editBtn.addEventListener('click', editAction);
 
   const deleteBtn = actionBtns[1];
 
