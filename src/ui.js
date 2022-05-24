@@ -20,6 +20,12 @@ class UI {
     return tag;
   }
 
+  static nodePrepare(dataRef, textContent = '') {
+    const tag = this.tag(dataRef);
+    tag.textContent = textContent;
+    return tag;
+  }
+
   static btnsDraw(key, value) {
     const { buttons } = data.viewModels.common;
     const btns = Object.entries(buttons);
@@ -93,24 +99,24 @@ class UI {
   }
 
   get statistic() {
-    const wrapData = data.statistic.wrap;
-    const casing = this.constructor.tag(wrapData);
+    const prefix = this.constructor;
 
-    const headerData = data.statistic.header;
-    const header = this.constructor.tag(headerData);
+    const statData = data.statistic;
+
+    const casing = prefix.nodePrepare(statData.wrap);
+
+    const header = prefix.tag(statData.header);
 
     const appendStatFields = () => {
-      const { common } = data.statistic.fields;
-      const { individual } = data.statistic.fields;
+      const stat = data.statistic.fields;
 
-      const fieldsDescription = Object.values(individual);
+      const fieldsDescription = Object.values(stat.individual);
       fieldsDescription.map((field) => {
-        const wrap = this.constructor.tag(common.wrap);
+        const wrap = prefix.tag(stat.common.wrap);
 
-        const title = this.constructor.tag(common.title);
-        title.textContent = field.titleContent;
+        const title = prefix.nodePrepare(stat.common.title, field.titleContent);
 
-        const value = this.constructor.tag(common.value);
+        const value = prefix.tag(stat.common.value);
         value.id = field.valueId;
 
         wrap.append(title);
@@ -125,30 +131,25 @@ class UI {
   }
 
   get cardView() {
+    const prefix = this.constructor;
     const { cards } = data.viewModels;
-    const shellData = cards.shell;
-    const shell = this.constructor.tag(shellData);
+    const shell = prefix.tag(cards.shell);
 
     const book = (card) => {
-      const coverData = cards.cover;
-      const cover = this.constructor.tag(coverData);
+      const cover = this.constructor.tag(cards.cover);
 
       const headersData = data.viewModels.common.headers;
 
       const headers = Object.keys(headersData);
 
       headers.map((header) => {
-        const stringData = cards.field;
-        const string = this.constructor.tag(stringData);
+        const string = prefix.nodePrepare(cards.field);
 
-        const titleData = cards.title;
-        const title = this.constructor.tag(titleData);
-        title.textContent = headersData[header];
+        const title = prefix.nodePrepare(cards.title, headersData[header]);
 
-        const valueData = cards.value;
-        const value = this.constructor.tag(valueData);
-        value.textContent = card[header];
-        this.constructor.btnsDraw(header, value);
+        const value = prefix.nodePrepare(cards.value, card[header]);
+
+        prefix.btnsDraw(header, value);
 
         string.append(title);
         string.append(value);
@@ -161,36 +162,27 @@ class UI {
   }
 
   get tableView() {
-    const tableData = data.viewModels.table;
-    const headersData = data.viewModels.common.headers;
-    const headers = Object.keys(headersData);
-    const trData = tableData.tr;
+    const prefix = this.constructor;
+    const pocket = data.viewModels;
+    const headers = Object.keys(pocket.common.headers);
 
     const setHeaders = () => {
-      const tr = this.constructor.tag(trData);
-      const thData = tableData.th;
+      const tr = prefix.tag(pocket.table.tr);
 
       headers.map((header) => {
-        const th = document.createElement(thData.tag);
-        th.className = thData.className;
-
-        const title = headersData[header].slice(0, -2);
-        th.textContent = title;
-
+        const title = pocket.common.headers[header].slice(0, -2);
+        const th = prefix.nodePrepare(pocket.table.th, title);
         return tr.append(th);
       });
-
       return tr;
     };
 
     const book = (row) => {
-      const tr = this.constructor.tag(trData);
+      const tr = prefix.tag(pocket.table.tr);
 
       headers.map((header) => {
-        const tdData = tableData.td;
-        const td = this.constructor.tag(tdData);
-        td.textContent = row[header];
-        this.constructor.btnsDraw(header, td);
+        const td = prefix.nodePrepare(pocket.table.td, row[header]);
+        prefix.btnsDraw(header, td);
 
         return tr.append(td);
       });
@@ -198,8 +190,7 @@ class UI {
       return tr;
     };
 
-    const tableTagData = data.viewModels.table.table;
-    const shell = this.constructor.tag(tableTagData);
+    const shell = prefix.tag(pocket.table.table);
 
     const titles = setHeaders();
     shell.append(titles);
@@ -208,41 +199,31 @@ class UI {
   }
 
   get addBookForm() {
-    const addBookFormData = data.addBookForm;
+    const prefix = this.constructor;
+    const pocket = data.addBookForm;
 
-    const wrapData = addBookFormData.wrap;
-    const wrap = this.constructor.tag(wrapData);
-    wrap.className = wrapData.className;
-    wrap.id = wrapData.id;
+    const wrap = prefix.tag(pocket.wrap);
 
-    const formData = addBookFormData.form;
-    const form = this.constructor.tag(formData);
+    const form = prefix.tag(pocket.form);
 
-    const headerData = addBookFormData.title;
-    const header = this.constructor.tag(headerData);
-
-    const formFieldsData = addBookFormData.field;
-    const fieldData = formFieldsData.wrap;
-    const titleData = formFieldsData.title;
-    const inputData = formFieldsData.input;
-    const fieldsInputData = formFieldsData.inputData;
+    const header = prefix.tag(pocket.title);
 
     const fieldsAdd = () => {
-      const inputs = Object.entries(fieldsInputData);
+      const inputs = Object.entries(pocket.field.inputData);
       inputs.map((settings) => {
         const setInputs = { ...settings[1] };
-        const setFields = { ...fieldData };
-        const setTitles = { ...titleData };
+        const setFields = { ...pocket.field.wrap };
+        const setTitles = { ...pocket.field.title };
 
         setFields.htmlFor = setInputs.id;
-        const field = this.constructor.tag(setFields);
+        const field = prefix.tag(setFields);
 
         setTitles.textContent = settings[1].textContent;
-        const title = this.constructor.tag(setTitles);
+        const title = prefix.tag(setTitles);
 
-        setInputs.tag = inputData.tag;
+        setInputs.tag = pocket.field.input.tag;
         delete setInputs.textContent;
-        const input = this.constructor.tag(setInputs);
+        const input = prefix.tag(setInputs);
 
         field.append(title, input);
         return form.append(field);
@@ -250,10 +231,9 @@ class UI {
     };
 
     const btnsAdd = () => {
-      const btnsData = addBookFormData.buttons;
-      const btns = Object.entries(btnsData);
+      const btns = Object.entries(pocket.buttons);
       btns.map((setting) => {
-        const btn = this.constructor.tag(setting[1]);
+        const btn = prefix.tag(setting[1]);
         return form.append(btn);
       });
     };
@@ -266,8 +246,7 @@ class UI {
   }
 
   get addBookBtn() {
-    const btnData = data.addBookBtn;
-    const btn = this.constructor.tag(btnData);
+    const btn = this.constructor.tag(data.addBookBtn);
     return btn;
   }
 }
