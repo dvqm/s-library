@@ -58,6 +58,41 @@ class UI {
     }
   }
 
+  editCard(book) {
+    const prefix = this.constructor;
+
+    const pocket = data.viewModels;
+
+    const pointer = this.view.shell.id;
+    const { className } = pocket[pointer].value;
+
+    const inputsCover = book.querySelectorAll(`.${className}`);
+    const editable = Object.values(inputsCover).slice(0, 6);
+
+    editable.forEach((cover) => {
+      const index = editable.indexOf(cover);
+      const { types } = pocket.common.input;
+
+      const input = prefix.tag(pocket.common.input);
+      input.type = types[index];
+
+      const label = cover;
+      input.value = label.textContent;
+
+      label.innerHTML = '';
+      label.append(input);
+    });
+
+    const actions = inputsCover[inputsCover.length - 1];
+    actions.innerHTML = '';
+
+    const btnsData = pocket.common.buttons.edit;
+    const saveBtn = prefix.tag(btnsData.save);
+    const cancelBtn = prefix.tag(btnsData.cancel);
+
+    actions.append(saveBtn, cancelBtn);
+  }
+
   get settings() {
     const wrapData = data.settings.wrap;
     const wrap = this.constructor.tag(wrapData);
@@ -181,7 +216,7 @@ class UI {
       const tr = prefix.tag(pocket.table.tr);
 
       headers.map((header) => {
-        const td = prefix.nodePrepare(pocket.table.td, row[header]);
+        const td = prefix.nodePrepare(pocket.table.value, row[header]);
         prefix.btnsDraw(header, td);
 
         return tr.append(td);
