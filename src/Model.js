@@ -30,7 +30,10 @@ class Model {
 
   update(newBook, index) {
     const library = this.constructor.getLibrary();
-    library[index] = newBook;
+    const newBookEntries = Object.entries(newBook);
+    newBookEntries.forEach((prop) => {
+      library[index][prop[0]] = prop[1];
+    });
     this.library = library;
   }
 
