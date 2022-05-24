@@ -67,7 +67,7 @@ class UI {
     const { className } = pocket[pointer].value;
 
     const inputsCover = book.querySelectorAll(`.${className}`);
-    const editable = Object.values(inputsCover).slice(0, 6);
+    const editable = Object.values(inputsCover).slice(0, 7);
 
     editable.forEach((cover) => {
       const index = editable.indexOf(cover);
@@ -78,6 +78,11 @@ class UI {
 
       const label = cover;
       input.value = label.textContent;
+
+      const yesText = data.viewModels.common.buttons.isRead.text.true;
+      if (types[index] === types[6] && input.value === yesText) {
+        input.checked = true;
+      }
 
       label.innerHTML = '';
       label.append(input);
