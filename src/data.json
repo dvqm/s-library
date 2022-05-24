@@ -130,7 +130,25 @@
             "edit": "Edit.",
             "delete": "Delete."
           }
+        },
+        "edit": {
+          "save": {
+            "tag": "button",
+            "className": "save",
+            "textContent": "Save"
+          },
+          "cancel": {
+            "tag": "button",
+            "className": "cancel",
+            "textContent": "Cancel"
+          }
         }
+      },
+
+      "input": {
+        "tag": "input",
+        "className": "editValue",
+        "types": ["text", "text", "number", "date", "date", "date"]
       }
     },
     "cards": {
@@ -170,7 +188,7 @@
         "tag": "th",
         "className": "tableHeader"
       },
-      "td": {
+      "value": {
         "tag": "td",
         "className": "tableData"
       }
@@ -221,25 +239,25 @@
           "textContent": "Number of pages: ",
           "type": "number",
           "className": "",
-          "id": "pageNum"
+          "id": "pages"
         },
         "publish": {
           "textContent": "Publish date: ",
           "type": "date",
           "className": "",
-          "id": "pubDate"
+          "id": "publish"
         },
         "start": {
           "textContent": "Start reading Date: ",
           "type": "date",
           "className": "",
-          "id": "startDate"
+          "id": "start"
         },
         "finish": {
           "textContent": "Finish reading date: ",
           "type": "date",
           "className": "",
-          "id": "finishDate"
+          "id": "finish"
         },
         "isRead": {
           "textContent": "Is it read?",
