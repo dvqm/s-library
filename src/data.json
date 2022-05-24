@@ -148,7 +148,7 @@
       "input": {
         "tag": "input",
         "className": "editValue",
-        "types": ["text", "text", "number", "date", "date", "date"]
+        "types": ["text", "text", "number", "date", "date", "date", "checkbox"]
       }
     },
     "cards": {
