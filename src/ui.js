@@ -1,6 +1,5 @@
 import data from './data.json';
 import './ui.scss';
-// TODO full refactor of the UI class.
 class UI {
   constructor() {
     this.view = this.cardView;
@@ -141,23 +140,21 @@ class UI {
   get statistic() {
     const prefix = this.constructor;
 
-    const statData = data.statistic;
+    const pocket = data.statistic;
 
-    const casing = prefix.nodePrepare(statData.wrap);
+    const casing = prefix.nodePrepare(pocket.wrap);
 
-    const header = prefix.tag(statData.header);
+    const header = prefix.tag(pocket.header);
 
     const appendStatFields = () => {
-      const stat = data.statistic.fields;
-
-      const fieldsDescription = Object.values(stat.individual);
+      const fieldsDescription = Object.values(pocket.fields.individual);
       fieldsDescription.map((field) => {
-        const wrap = prefix.tag(stat.common.wrap);
+        const wrap = prefix.tag(pocket.fields.common.wrap);
 
-        const title = prefix.nodePrepare(stat.common.title, field.titleContent);
+        const title = prefix.nodePrepare(pocket.fields.common.title, field.textContent);
 
-        const value = prefix.tag(stat.common.value);
-        value.id = field.valueId;
+        const value = prefix.tag(pocket.fields.common.value);
+        value.id = field.id;
 
         wrap.append(title);
         wrap.append(value);
