@@ -61,7 +61,9 @@ class Model {
     const newBookEntries = Object.entries(newBook);
 
     newBookEntries.forEach((prop) => {
-      library[index][prop[0]] = prop[1];
+      const [key, value] = prop;
+
+      library[index][key] = value;
     });
 
     this.library = library;
