@@ -81,20 +81,20 @@
       },
       "individual": {
         "books": {
-          "titleContent": "Books in the library: ",
-          "valueId": "booksNum"
+          "textContent": "Books in the library: ",
+          "id": "booksNum"
         },
         "read": {
-          "titleContent": "Read books: ",
-          "valueId": "readNum"
+          "textContent": "Read books: ",
+          "id": "readNum"
         },
         "pages": {
-          "titleContent": "Pages in total: ",
-          "valueId": "pagesNum"
+          "textContent": "Pages in total: ",
+          "id": "pagesNum"
         },
         "forgotten": {
-          "titleContent": "Forgotten books: ",
-          "valueId": "forgotNum"
+          "textContent": "Forgotten books: ",
+          "id": "forgotNum"
         }
       }
     }
@@ -292,3 +292,4 @@
     "textContent": "Add Book"
   }
 }
+

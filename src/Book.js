@@ -41,4 +41,5 @@ class Book {
     this.isRead = fields[6].checked;
   }
 }
+
 export default Book;
