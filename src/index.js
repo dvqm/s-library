@@ -8,6 +8,17 @@ const tools = new Model();
 
 // localStorage.removeItem('library');
 
+const statistic = () => {
+  const books = document.querySelector('#booksNum');
+  books.textContent = tools.statistic.books;
+
+  const read = document.querySelector('#readNum');
+  read.textContent = tools.statistic.read;
+
+  const pages = document.querySelector('#pagesNum');
+  pages.textContent = tools.statistic.pages;
+};
+
 const bookEvents = (node, book) => {
   const card = node.book(book);
 
@@ -30,9 +41,10 @@ const bookEvents = (node, book) => {
 
     updatedBook.insert(index);
 
-    index = getIndex(e, -1);
+    if (node.shell.id === 'table') index = getIndex(e, -1);
 
     tools.update(newBook, index);
+    statistic();
   };
 
   const isRead = card.querySelector('.isRead');
@@ -50,7 +62,7 @@ const bookEvents = (node, book) => {
 
       let index = getIndex(e);
 
-      index = getIndex(e, -1);
+      if (node.shell.id === 'table') index = getIndex(e, -1);
 
       tools.update(newBook, index);
 
@@ -62,6 +74,7 @@ const bookEvents = (node, book) => {
       index = getIndex(e);
 
       updatedBook.insert(index);
+      statistic();
     };
 
     const close = () => {
@@ -94,6 +107,7 @@ const bookEvents = (node, book) => {
     index = getIndex(e, -1);
 
     tools.remove(index);
+    statistic();
   };
 
   const actionBtns = card.querySelectorAll('.actionBtn');
@@ -192,6 +206,7 @@ const addBookForm = (node) => {
     book.render();
 
     close();
+    statistic();
   };
 
   const closeBtn = node.querySelector('#close');
@@ -236,3 +251,5 @@ const mainPage = new UiCreator(
 );
 
 mainPage.render();
+
+statistic();
