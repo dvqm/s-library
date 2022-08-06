@@ -2,11 +2,28 @@ class Model {
   static setDate(book) {
     const curDate = new Date();
 
-    const bookCopy = book;
+    const item = book;
 
-    bookCopy.created = `${curDate.getFullYear()}-${curDate.getMonth()}-${curDate.getDay()}`;
+    item.created = `${curDate.getFullYear()}-${
+      curDate.getMonth() + 1
+    }-${curDate.getDay()}`;
 
-    return bookCopy;
+    return item;
+  }
+
+  static setId(book, library) {
+    const item = book;
+
+    if (library.length === 0) {
+      item.id = 'b-1';
+      return item;
+    }
+
+    const rejectSign = library[library.length - 1].id.replace('b-', '');
+
+    item.id = `b-${Number(rejectSign) + 1}`;
+
+    return item;
   }
 
   set library(newLibrary) {
@@ -74,11 +91,11 @@ class Model {
 
     this.constructor.setDate(book);
 
+    this.constructor.setId(book, library);
+
     library.push(book);
 
-    const libToString = JSON.stringify(library);
-
-    localStorage.setItem('library', libToString);
+    localStorage.setItem('library', JSON.stringify(library));
   }
 }
 
