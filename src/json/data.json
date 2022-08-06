@@ -1,0 +1,77 @@
+{
+  "libraryMain": {
+    "tag": "div",
+    "className": "library",
+    "c": {
+      "settings": {
+        "tag": "div",
+        "className": "settings",
+        "c": {
+          "libHeader": {
+            "tag": "div",
+            "c": {
+              "image": {
+                "tag": "img"
+              },
+              "text": {
+                "tag": "span",
+                "textContent": "My Library"
+              }
+            }
+          },
+          "toggleTheme": {
+            "tag": "label",
+            "textContent": "Lights Off",
+            "c": {
+              "toggler": {
+                "tag": "input",
+                "type": "checkbox",
+                "id": "lightSwitch"
+              }
+            }
+          },
+          "cardBtn": {
+            "tag": "button",
+            "id": "toggleCard"
+          },
+          "tableBtn": {
+            "tag": "button",
+            "id": "toggleTable"
+          }
+        }
+      },
+      "statistics": {
+        "tag": "div",
+        "className": "statistics",
+        "c": {
+          "statHeader": {
+            "tag": "h2",
+            "textContent": "Statistics"
+          }
+        }
+      },
+      "addBookForm": {
+        "tag": "dialog",
+        "className": "addBookForm",
+        "c": {
+          "form": {
+            "tag": "form",
+            "className": "addBookForm",
+            "c": {
+              "formHeader": {
+                "tag": "h2",
+                "textContent": "Please, add the Book"
+              }
+            }
+          }
+        }
+      },
+      "addBookBtn": {
+        "tag": "button",
+        "textContent": "Add Book",
+        "className": "addBookBtn",
+        "id": "addBook"
+      }
+    }
+  }
+}
