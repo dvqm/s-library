@@ -1,5 +1,6 @@
-import data from './data.json';
+import data from '../data.json';
 import './ui.scss';
+
 class UI {
   constructor() {
     this.view = this.cardView;
@@ -151,7 +152,10 @@ class UI {
       fieldsDescription.map((field) => {
         const wrap = prefix.tag(pocket.fields.common.wrap);
 
-        const title = prefix.nodePrepare(pocket.fields.common.title, field.textContent);
+        const title = prefix.nodePrepare(
+          pocket.fields.common.title,
+          field.textContent
+        );
 
         const value = prefix.tag(pocket.fields.common.value);
         value.id = field.id;
