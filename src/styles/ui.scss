@@ -1,0 +1,98 @@
+.library {
+  // statistic section
+  .statistic {
+    background-color: rgb(255, 255, 255);
+    padding: 10px;
+    border: solid black 1px;
+    text-align: right;
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    border-radius: 10px;
+    z-index: 1;
+  }
+}
+
+.library {
+  // viewModel section
+  .cardView {
+    // cards section
+    display: flex;
+    flex-wrap: wrap;
+
+    .card {
+      width: 300px;
+      border: 1px solid black;
+      background: linear-gradient(
+        180deg,
+        rgba(173, 192, 255, 0.63) 0%,
+        rgba(255, 255, 255, 1) 100%
+      );
+      border-radius: 10px;
+      margin: 15px;
+      padding: 20px;
+    }
+  }
+}
+
+.library {
+  // addBookForm
+  .dialog {
+    // z-index: 1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+
+    &::backdrop {
+      background-color: #000;
+      opacity: 70%;
+    }
+  }
+
+  .addBookForm {
+    margin: 10px;
+    padding: 50px 20px;
+    background-color: #fff;
+    width: 400px;
+    height: 200px;
+
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.library {
+  // addBookBtn section
+  .addBookBtn {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    border: 0;
+    background-color: #000;
+    color: #fff;
+    animation: pulseBtn 3s infinite;
+    position: fixed;
+    bottom: 65px;
+    right: 60px;
+    margin-left: -50%;
+    transform: translate(50%, 50%);
+    z-index: 9;
+  }
+
+  @keyframes pulseBtn {
+    0% {
+      width: 100px;
+      height: 100px;
+    }
+    50% {
+      width: 110px;
+      height: 110px;
+    }
+    100% {
+      width: 100px;
+      height: 100px;
+    }
+  }
+}
