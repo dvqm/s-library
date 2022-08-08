@@ -9,6 +9,8 @@ class UiCreator {
   }
 
   nodeCreate(uiData) {
+    if (Object.keys(uiData).length === 0) return '';
+
     const element = this.constructor.objCopy(uiData);
 
     const { tag } = element;
