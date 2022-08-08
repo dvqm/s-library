@@ -61,6 +61,21 @@
               "formHeader": {
                 "tag": "h2",
                 "textContent": "Please, add the Book"
+              },
+              "buttons": {
+                "tag": "div",
+                "c": {
+                  "cancelBtn": {
+                    "tag": "button",
+                    "className": "cancel",
+                    "id": "cancel"
+                  },
+                  "saveBtn": {
+                    "tag": "button",
+                    "className": "save",
+                    "id": "save"
+                  }
+                }
               }
             }
           }

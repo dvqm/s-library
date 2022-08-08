@@ -61,24 +61,27 @@
             "tag": "span",
             "className": "pageNumber"
           },
-          "readingDates": {
+          "start": {
             "tag": "p",
-            "className": "readingDates",
             "c": {
               "title": {
                 "tag": "span",
-                "textContent": "Reading Dates"
+                "textContent": "Start: "
               },
-              "dates": {
-                "tag": "p",
-                "c": {
-                  "start": {
-                    "tag": "span"
-                  },
-                  "finish": {
-                    "tag": "span"
-                  }
-                }
+              "date": {
+                "tag": "span"
+              }
+            }
+          },
+          "finish": {
+            "tag": "p",
+            "c": {
+              "title": {
+                "tag": "span",
+                "textContent": "Finish: "
+              },
+              "date": {
+                "tag": "span"
               }
             }
           },
@@ -202,5 +205,34 @@
       }
     }
   },
-  "bookFormFields": {}
+  "formFields": {
+    "tag": "label",
+    "c": {
+      "name": {
+        "tag": "span",
+        "textContent": [
+          "Book author:",
+          "Book title:",
+          "Pages number:",
+          "Publish date:",
+          "Start reading:",
+          "Finish reading:",
+          "I've finished reading the book:"
+        ]
+      },
+      "content": {
+        "tag": "input",
+        "type": ["text", "text", "number", "date", "date", "date", "checkbox"],
+        "id": [
+          "author",
+          "title",
+          "pages",
+          "publish",
+          "start",
+          "finish",
+          "isRead"
+        ]
+      }
+    }
+  }
 }
