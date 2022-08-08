@@ -6,7 +6,7 @@ class Model {
 
     item.created = `${curDate.getFullYear()}-${
       curDate.getMonth() + 1
-    }-${curDate.getDay()}`;
+    }-${curDate.getDate()}`;
 
     return item;
   }
