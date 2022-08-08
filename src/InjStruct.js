@@ -48,6 +48,15 @@ class InjStruct {
 
     delete view.c.card;
 
+    const dates = {
+      finish: get.ref('finish', cardTemp),
+      start: get.ref('start', cardTemp),
+    };
+
+    cardTemp.c.start = {};
+
+    cardTemp.c.finish = {};
+
     lib.forEach((book) => {
       const card = get.copy(cardTemp);
 
@@ -56,7 +65,11 @@ class InjStruct {
         const ref = card.c[caption];
 
         if (caption === 'start' || caption === 'finish') {
-          get.ref(caption, card.c.readingDates).textContent = book[caption];
+          if (book[caption]) {
+            card.c[caption] = dates[caption];
+
+            dates[caption].c.date.textContent = book[caption];
+          }
         } else if (caption === 'created') {
           ref.c.date.textContent = book[caption];
         } else if (caption === 'title') {
@@ -164,6 +177,48 @@ class InjStruct {
     });
 
     ui.c = get.preciseInsert(ui.c, 'addBookForm', 'tableView', view);
+    return data;
+  }
+
+  addBookForm(data) {
+    const get = this.constructor;
+
+    const { ui } = data;
+
+    const view = get.copy(this.structure.formFields);
+
+    const names = view.c.name.textContent;
+
+    const types = view.c.content.type;
+
+    const ids = view.c.content.id;
+
+    view.c.name.textContent = '';
+
+    view.c.content.type = '';
+
+    view.c.content.id = '';
+
+    const form = get.ref('form', ui.c.addBookForm);
+
+    const { buttons } = form.c;
+
+    delete form.c.buttons;
+
+    ids.forEach((id, ind) => {
+      const field = get.copy(view);
+
+      field.c.name.textContent = names[ind];
+
+      field.c.content.type = types[ind];
+
+      field.c.content.id = id;
+
+      form.c[id] = field;
+    });
+
+    form.c.buttons = buttons;
+
     return data;
   }
 }
