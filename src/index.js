@@ -1,27 +1,8 @@
-import InjStruct from './InjStruct';
-import data from './json/data.json';
-import content from './json/injectedContent.json';
-import Model from './Model';
-import UiCreator from './UiCreator';
+import Events from './Events';
 
-const model = new Model();
+const uiWithEvents = new Events();
 
-const ui = new UiCreator();
-
-const injected = new InjStruct(content);
-
-const uiStructure = ui.composer(
-  {
-    ui: data.libraryMain,
-    lib: model.library,
-  },
-  injected.cardView.bind(injected),
-  injected.tableView.bind(injected)
-);
-
-const library = ui.nodeCreate(uiStructure.ui);
-
-ui.render(document.body, library);
+uiWithEvents.testView();
 
 const mockLibrary = [
   {
@@ -33,9 +14,25 @@ const mockLibrary = [
     finish: '2022-01-03',
     isRead: 'true',
   },
+
+  {
+    author: 'Antoine de Saint-Exupéry',
+    title: 'The Little Prince',
+    publish: '1943-04-01',
+    pages: '59',
+    start: '2022-03-02',
+    // finish: '2022-01-03',
+    isRead: 'false',
+  },
 ];
 
+// const model = new Model();
 // model.add(mockLibrary[0]);
+// model.add(mockLibrary[1]);
+// model.add(mockLibrary[0]);
+// model.add(mockLibrary[1]);
+// model.add(mockLibrary[0]);
+// model.add(mockLibrary[1]);
 // localStorage.removeItem('library');
 // console.log(model.library);
 // console.log(uiStructure);
