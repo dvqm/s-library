@@ -1,17 +1,42 @@
 class UiCreator {
-  static objCopy(obj) {
+  static copy(obj) {
     return JSON.parse(JSON.stringify(obj));
   }
 
-  composer(data, ...handlers) {
-    const obj = this.constructor.objCopy(data);
-    return [...handlers].reduce((prev, next) => next(prev), obj);
+  static ref(name, obj) {
+    let result;
+
+    const nameSearch = (prop) => {
+      if (name in prop) result = prop[name];
+
+      Object.values(prop).forEach((value) => {
+        if (typeof value === 'object') return nameSearch(value);
+        return result;
+      });
+    };
+    nameSearch(obj);
+
+    return result;
   }
 
-  nodeCreate(uiData) {
-    if (Object.keys(uiData).length === 0) return '';
+  static preciseInsert(object, successor, key, value) {
+    const newObject = {};
 
-    const element = this.constructor.objCopy(uiData);
+    Object.keys(object).forEach((property) => {
+      if (property === successor) {
+        newObject[key] = value;
+
+        newObject[property] = object[property];
+      } else newObject[property] = object[property];
+    });
+
+    return newObject;
+  }
+
+  static node(data) {
+    if (Object.keys(data).length === 0) return '';
+
+    const element = this.copy(data);
 
     const { tag } = element;
 
@@ -24,21 +49,25 @@ class UiCreator {
       if (key.includes('data-')) parent.setAttribute(key, value);
     });
 
-    const blank = this.constructor.objCopy(uiData);
+    const blank = this.copy(data);
 
     if (blank.c) {
       const { c } = blank;
 
       Object.values(c).forEach((node) => {
-        parent.append(this.nodeCreate(node));
+        parent.append(this.node(node));
       });
     }
 
     return parent;
   }
 
-  render(pointer, node) {
-    return pointer.append(node);
+  static composer(data, ...handlers) {
+    return [...handlers].reduce((prev, next) => next(prev), {});
+  }
+
+  render(pointer, ...node) {
+    return pointer.append(...node);
   }
 }
 
