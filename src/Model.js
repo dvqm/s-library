@@ -64,26 +64,30 @@ class Model {
     return { books, read, pages };
   }
 
-  remove(index) {
+  remove(id) {
     const { library } = this;
+
+    const index = library.findIndex((book) => book.id === id);
 
     library.splice(index, 1);
 
     this.library = library;
   }
 
-  update(newBook, index) {
+  update(newBook) {
     const { library } = this;
 
-    const newBookEntries = Object.entries(newBook);
+    const index = library.findIndex((book) => book.id === newBook.id);
 
-    newBookEntries.forEach((prop) => {
-      const [key, value] = prop;
-
-      library[index][key] = value;
-    });
+    library[index] = newBook;
 
     this.library = library;
+  }
+
+  getBook(id) {
+    const { library } = this;
+
+    return library.find((book) => book.id === id);
   }
 
   add(book) {
