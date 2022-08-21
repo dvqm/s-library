@@ -95,7 +95,6 @@
             },
             "title": {
               "tag": "p",
-              "className": "title",
               "c": {
                 "preposition": {
                   "tag": "span",
@@ -109,20 +108,20 @@
             },
             "publish": {
               "tag": "div",
-              "className": "published",
               "c": {
                 "title": {
                   "tag": "span",
                   "textContent": "published on "
                 },
                 "date": {
-                  "tag": "span"
+                  "tag": "span",
+                  "className": "publish"
                 }
               }
             },
             "pages": {
               "tag": "span",
-              "className": "pageNumber"
+              "className": "pages"
             },
             "start": {
               "tag": "p",
@@ -132,7 +131,8 @@
                   "textContent": "Start: "
                 },
                 "date": {
-                  "tag": "span"
+                  "tag": "span",
+                  "className": "start"
                 }
               }
             },
@@ -144,7 +144,8 @@
                   "textContent": "Finish: "
                 },
                 "date": {
-                  "tag": "span"
+                  "tag": "span",
+                  "className": "finish"
                 }
               }
             },
@@ -168,10 +169,12 @@
               "tag": "div",
               "c": {
                 "edit": {
-                  "tag": "button"
+                  "tag": "button",
+                  "className": "edit"
                 },
                 "delete": {
-                  "tag": "button"
+                  "tag": "button",
+                  "className": "delete"
                 }
               }
             }
@@ -223,10 +226,12 @@
               "className": "tableData",
               "c": {
                 "edit": {
-                  "tag": "button"
+                  "tag": "button",
+                  "className": "edit"
                 },
                 "delete": {
-                  "tag": "button"
+                  "tag": "button",
+                  "className": "delete"
                 }
               }
             }
@@ -291,12 +296,14 @@
                 "cancelBtn": {
                   "tag": "button",
                   "className": "cancel",
-                  "id": "cancel"
+                  "id": "cancel",
+                  "type": "button"
                 },
                 "saveBtn": {
                   "tag": "button",
                   "className": "save",
-                  "id": "save"
+                  "id": "save",
+                  "type": "button"
                 }
               }
             }
@@ -322,6 +329,20 @@
       "finish",
       "isRead",
       "created"
-    ]
+    ],
+    "editableFields": [
+      ["author", "text"],
+      ["title", "text"],
+      ["publish", "date"],
+      ["pages", "number"],
+      ["start", "date"],
+      ["finish", "date"]
+    ],
+    "changeableBtns": {
+      "update": "edit",
+      "del": "delete",
+      "store": "save",
+      "abort": "cancel"
+    }
   }
 }
