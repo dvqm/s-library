@@ -35,15 +35,6 @@ class UI extends UiCreator {
 
     delete view.c.card;
 
-    const dates = {
-      finish: get.ref('finish', cardTemp),
-      start: get.ref('start', cardTemp),
-    };
-
-    cardTemp.c.start = {};
-
-    cardTemp.c.finish = {};
-
     lib.forEach((book) => {
       const card = get.copy(cardTemp);
 
@@ -53,11 +44,9 @@ class UI extends UiCreator {
         const ref = card.c[caption];
 
         if (caption === 'start' || caption === 'finish') {
-          if (book[caption]) {
-            card.c[caption] = dates[caption];
-
-            dates[caption].c.date.textContent = book[caption];
-          }
+          card.c[caption].c.date.textContent = book[caption];
+          if (book[caption] === undefined)
+            card.c[caption].c.date.textContent = '--/--/--';
         } else if (caption === 'created') {
           ref.c.date.textContent = book[caption];
         } else if (caption === 'title') {
@@ -145,6 +134,8 @@ class UI extends UiCreator {
           cell.c = { isRead: checkbox };
         } else {
           cell.textContent = value;
+
+          cell.className += ` ${key}`;
         }
 
         row.c[key] = cell;
