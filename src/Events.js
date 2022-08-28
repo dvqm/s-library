@@ -43,9 +43,19 @@ class Events {
       prevBtn.replaceWith(btn);
     };
 
+    const isReadBtns = node.querySelectorAll('.isRead');
+
     const deleteBtns = node.querySelectorAll('.delete');
 
     const editBtns = node.querySelectorAll('.edit');
+
+    const isItRead = (e) => {
+      const { id } = e.target.dataset;
+
+      const status = e.target.checked;
+
+      this.model.setRead(id, status);
+    };
 
     const remove = (e) => {
       const card = e.target.parentElement.parentElement;
@@ -160,6 +170,8 @@ class Events {
 
       replaceBtn(del, abort, card, 'click', cancel);
     };
+
+    isReadBtns.forEach((btn) => btn.addEventListener('click', isItRead));
 
     editBtns.forEach((btn) => btn.addEventListener('click', edit));
 
