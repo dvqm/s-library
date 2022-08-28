@@ -84,6 +84,14 @@ class Model {
     this.library = library;
   }
 
+  setRead(id, status) {
+    const book = this.getBook(id);
+
+    book.isRead = status ? 'true' : 'false';
+
+    this.update(book);
+  }
+
   getBook(id) {
     const { library } = this;
 
