@@ -43,16 +43,19 @@ class UI extends UiCreator {
       captions.forEach((caption) => {
         const ref = card.c[caption];
 
-        if (caption === 'start' || caption === 'finish') {
-          card.c[caption].c.date.textContent = book[caption];
-          if (book[caption] === undefined)
-            card.c[caption].c.date.textContent = '--/--/--';
+        if (caption === 'id') {
+          ref.textContent = ref.textContent.concat(book[caption]);
+        } else if (
+          caption === 'start' ||
+          caption === 'finish' ||
+          caption === 'publish'
+        ) {
+          ref.c.date.textContent = book[caption];
+          if (book[caption] === undefined) ref.c.date.textContent = '--/--/--';
         } else if (caption === 'created') {
           ref.c.date.textContent = book[caption];
-        } else if (caption === 'title') {
+        } else if (caption === 'author') {
           ref.c.title.textContent = book[caption];
-        } else if (caption === 'publish') {
-          ref.c.date.textContent = book[caption];
         } else if (caption === 'isRead') {
           if (book[caption] === 'true') ref.checked = true;
           ref['data-id'] = book.id;
@@ -114,7 +117,14 @@ class UI extends UiCreator {
       const sorted = {};
 
       captions.forEach((caption) => {
-        sorted[caption] = book[caption];
+        if (
+          (caption === 'publish' ||
+            caption === 'start' ||
+            caption === 'finish') &&
+          !book[caption]
+        )
+          sorted[caption] = '--/--/--';
+        else sorted[caption] = book[caption];
       });
 
       const checkbox = row.c.isRead;
