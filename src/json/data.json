@@ -11,11 +11,9 @@
         "libHeader": {
           "tag": "div",
           "c": {
-            "image": {
-              "tag": "img"
-            },
             "text": {
-              "tag": "span",
+              "tag": "h1",
+              "className": "mainHeader",
               "textContent": "My Library"
             }
           }
@@ -34,10 +32,12 @@
         "cardBtn": {
           "tag": "button",
           "id": "toggleCard",
+          "className": "toggleCard",
           "disabled": "true"
         },
         "tableBtn": {
           "tag": "button",
+          "className": "toggleTable",
           "id": "toggleTable"
         }
       }
@@ -84,17 +84,26 @@
           "tag": "div",
           "className": "card",
           "c": {
+            "vLine": {
+              "tag": "div",
+              "className": "vline"
+            },
+            "icon": {
+              "tag": "div",
+              "className": "icon"
+            },
             "id": {
-              "tag": "span",
+              "tag": "p",
               "className": "id",
               "textContent": "Book id: "
             },
-            "author": {
-              "tag": "span",
-              "className": "author"
-            },
             "title": {
+              "tag": "h2",
+              "className": "title"
+            },
+            "author": {
               "tag": "p",
+              "className": "authorWrap",
               "c": {
                 "preposition": {
                   "tag": "span",
@@ -102,12 +111,12 @@
                 },
                 "title": {
                   "tag": "span",
-                  "className": "title"
+                  "className": "author"
                 }
               }
             },
             "publish": {
-              "tag": "div",
+              "tag": "p",
               "c": {
                 "title": {
                   "tag": "span",
@@ -115,7 +124,7 @@
                 },
                 "date": {
                   "tag": "span",
-                  "className": "publish"
+                  "className": "publish result"
                 }
               }
             },
@@ -132,7 +141,7 @@
                 },
                 "date": {
                   "tag": "span",
-                  "className": "start"
+                  "className": "start result"
                 }
               }
             },
@@ -145,7 +154,7 @@
                 },
                 "date": {
                   "tag": "span",
-                  "className": "finish"
+                  "className": "finish result"
                 }
               }
             },
@@ -154,16 +163,18 @@
               "c": {
                 "title": {
                   "tag": "span",
-                  "textContent": "Book added:"
+                  "textContent": "Book added: "
                 },
                 "date": {
-                  "tag": "span"
+                  "tag": "span",
+                  "textContent": "result"
                 }
               }
             },
             "isRead": {
               "tag": "input",
-              "type": "checkbox"
+              "type": "checkbox",
+              "className": "isRead"
             },
             "manage": {
               "tag": "div",
