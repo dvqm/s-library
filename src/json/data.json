@@ -230,6 +230,7 @@
             },
             "isRead": {
               "tag": "input",
+              "className": "isRead",
               "type": "checkbox"
             },
             "actions": {
@@ -252,7 +253,7 @@
     },
     "addBookForm": {
       "tag": "dialog",
-      "className": "addBookForm",
+      "className": "dialog",
       "id": "dialog",
       "c": {
         "form": {
