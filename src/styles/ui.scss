@@ -306,3 +306,56 @@
     height: 100px;
   }
 }
+
+.dialog {
+  border: none;
+  border-radius: 30px;
+}
+
+.addBookForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 15px 50px;
+
+  label {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: left;
+    margin: 10px 0;
+
+    &:nth-child(4) input {
+      width: 50px;
+    }
+
+    &:nth-last-child(2) span {
+      width: 200px;
+    }
+
+    span {
+      width: 120px;
+    }
+
+    input {
+      width: 350px;
+    }
+
+    input[type='date'] {
+      width: initial;
+    }
+
+    input[type='checkbox'] {
+      width: initial;
+    }
+  }
+
+  div {
+    display: flex;
+    width: 100%;
+    margin-top: 30px;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+  }
+}
