@@ -57,7 +57,14 @@ class UI extends UiCreator {
         } else if (caption === 'author') {
           ref.c.title.textContent = book[caption];
         } else if (caption === 'isRead') {
-          if (book[caption] === 'true') ref.checked = true;
+          if (book[caption] === 'true') {
+            ref.checked = true;
+            card.className = card.className.concat(' read');
+          } else {
+            ref.checked = false;
+            card.className = card.className.concat(' unread');
+          }
+
           ref['data-id'] = book.id;
         } else {
           ref.textContent = book[caption];
@@ -139,7 +146,15 @@ class UI extends UiCreator {
         if (key === 'isRead') {
           checkbox['data-id'] = book.id;
 
-          if (value === 'true') checkbox.checked = true;
+          if (value === 'true') {
+            checkbox.checked = true;
+
+            row.className = row.className.concat(' read');
+          } else {
+            checkbox.checked = false;
+
+            row.className = row.className.concat(' unread');
+          }
 
           cell.c = { isRead: checkbox };
         } else {
