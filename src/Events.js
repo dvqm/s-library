@@ -1,6 +1,7 @@
-import UI from './UI';
+import FieldChecks from './FieldChecks';
 import data from './json/data.json';
 import Model from './Model';
+import UI from './UI';
 import UiCreator from './UiCreator';
 
 class Events {
@@ -9,6 +10,8 @@ class Events {
   static ui = new UI(data);
 
   static model = new Model();
+
+  static FieldChecks = new FieldChecks();
 
   static mainPage() {
     const wrapper = this.ui.wrapper();
@@ -43,19 +46,86 @@ class Events {
       prevBtn.replaceWith(btn);
     };
 
+    const setEditMode = (fields, element) => {
+      fields.forEach((set) => {
+        const [field, type] = set;
+
+        const el = element.querySelector(`.${field}`);
+
+        const input = document.createElement('input');
+
+        input.className = field;
+
+        input.type = type;
+        if (el && element.tagName === 'DIV') {
+          input.value = el.textContent;
+
+          el.replaceWith(input);
+        }
+
+        if (el && element.tagName === 'TR') {
+          input.value = el.textContent;
+
+          el.textContent = '';
+
+          el.append(input);
+        }
+      });
+    };
+
+    const setViewMode = (id, element) => {
+      const book = [this.model.getBook(id)];
+
+      let bookUi;
+
+      if (element.tagName === 'DIV') bookUi = this.ui.cardView(book).firstChild;
+
+      if (element.tagName === 'TR') bookUi = this.ui.tableView(book).lastChild;
+
+      this.viewManage(bookUi);
+
+      element.replaceWith(bookUi);
+    };
+
+    const changeClassName = (element, prev, next) => {
+      element.classList.add(next);
+
+      element.classList.remove(prev);
+    };
+
+    const readChangeColor = (event, status) => {
+      const card = event.target.parentElement;
+
+      if (card.tagName === 'DIV' && status)
+        changeClassName(card, 'unread', 'read');
+      if (card.tagName === 'DIV' && !status)
+        changeClassName(card, 'read', 'unread');
+
+      if (card.tagName === 'TD' && status)
+        changeClassName(card.parentElement, 'unread', 'read');
+      if (card.tagName === 'TD' && !status)
+        changeClassName(card.parentElement, 'read', 'unread');
+    };
+
+    // set book read or unread mode
+
     const isReadBtns = node.querySelectorAll('.isRead');
-
-    const deleteBtns = node.querySelectorAll('.delete');
-
-    const editBtns = node.querySelectorAll('.edit');
 
     const isItRead = (e) => {
       const { id } = e.target.dataset;
 
       const status = e.target.checked;
 
+      readChangeColor(e, status);
+
       this.model.setRead(id, status);
     };
+
+    isReadBtns.forEach((btn) => btn.addEventListener('click', isItRead));
+
+    // set book remove mode
+
+    const deleteBtns = node.querySelectorAll('.delete');
 
     const remove = (e) => {
       const card = e.target.parentElement.parentElement;
@@ -67,36 +137,18 @@ class Events {
       card.remove();
     };
 
+    deleteBtns.forEach((btn) => btn.addEventListener('click', remove));
+
+    // set edit mode with save or cancel buttons
+
+    const editBtns = node.querySelectorAll('.edit');
+
     const edit = (e) => {
       const card = e.target.parentElement.parentElement;
 
       const settings = data.tools.editableFields;
 
-      settings.forEach((set) => {
-        const [field, type] = set;
-
-        const el = card.querySelector(`.${field}`);
-
-        const input = document.createElement('input');
-
-        input.className = field;
-
-        input.type = type;
-
-        if (el) {
-          input.value = el.textContent;
-
-          if (el.tagName === 'SPAN') {
-            el.replaceWith(input);
-          }
-
-          if (el.tagName === 'TD') {
-            el.textContent = '';
-
-            el.append(input);
-          }
-        }
-      });
+      setEditMode(settings, card);
 
       const { update, del, store, abort } = data.tools.changeableBtns;
 
@@ -111,71 +163,32 @@ class Events {
           if (el.tagName === 'TD') el = el.firstChild;
 
           updatedFields[name] = el.value;
-
-          const span = document.createElement('span');
-
-          span.className = el.className;
-
-          span.textContent = el.value;
-
-          if ((name === 'start' || name === 'finish') && el.value.length < 1) {
-            span.textContent = '--/--/--';
-          }
-
-          el.replaceWith(span);
         });
 
         const book = this.model.getBook(event.target.dataset.id);
 
-        Object.keys(book).forEach((key) => {
-          if (updatedFields[key]) book[key] = updatedFields[key];
+        Object.entries(updatedFields).forEach((entry) => {
+          const [key, value] = entry;
+
+          if (value.length > 0) book[key] = value;
+          else delete book[key];
         });
 
         this.model.update(book);
 
-        replaceBtn(store, update, card, 'click', edit);
-
-        replaceBtn(abort, del, card, 'click', remove);
+        setViewMode(event.target.dataset.id, card);
       };
 
       replaceBtn(update, store, card, 'click', save);
 
       const cancel = (event) => {
-        const book = this.model.getBook(event.target.dataset.id);
-
-        settings.forEach((field) => {
-          const name = field[0];
-
-          let el = card.querySelector(`.${name}`);
-
-          if (el.tagName === 'TD') el = el.firstChild;
-
-          const span = document.createElement('span');
-
-          span.className = el.className;
-
-          span.textContent = book[name];
-
-          if ((name === 'start' || name === 'finish') && !book[name]) {
-            span.textContent = '--/--/--';
-          }
-
-          el.replaceWith(span);
-        });
-
-        replaceBtn(store, update, card, 'click', edit);
-
-        replaceBtn(abort, del, card, 'click', remove);
+        setViewMode(event.target.dataset.id, card);
       };
 
       replaceBtn(del, abort, card, 'click', cancel);
     };
 
-    isReadBtns.forEach((btn) => btn.addEventListener('click', isItRead));
-
     editBtns.forEach((btn) => btn.addEventListener('click', edit));
-
-    deleteBtns.forEach((btn) => btn.addEventListener('click', remove));
   }
 
   changeView(node) {
