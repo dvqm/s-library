@@ -3,6 +3,7 @@ import data from './json/data.json';
 import Model from './Model';
 import UI from './UI';
 import UiCreator from './UiCreator';
+import Book from './Book';
 
 class Events {
   static uiCreate = new UiCreator();
@@ -238,11 +239,19 @@ class Events {
   }
 
   form(node) {
+    const get = this.constructor;
+
     const saveBtn = node.querySelector('#save');
 
     const dialog = node.querySelector('#dialog');
 
     const save = () => {
+      const book = new Book(node);
+
+      const newBook = book.create();
+
+      get.model.add(newBook);
+
       dialog.close();
     };
 
@@ -251,6 +260,10 @@ class Events {
     const cancelBtn = node.querySelector('#cancel');
 
     const cancel = () => {
+      const book = new Book(node);
+
+      book.clear();
+
       dialog.close();
     };
 
@@ -265,6 +278,8 @@ class Events {
     this.constructor.ui.render(document.body, wrapper);
 
     this.changeView(wrapper);
+
+    this.form(wrapper);
 
     this.addBook(wrapper);
   }
