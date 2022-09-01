@@ -44,12 +44,14 @@ class Model {
     return library;
   }
 
-  get statistic() {
+  get statistics() {
     const { library } = this;
 
-    const books = library.length;
+    const stats = [];
 
-    const read = library.filter((book) => book.isRead === true).length;
+    stats.booksNum = library.length;
+
+    stats.readNum = library.filter((book) => book.isRead === 'true').length;
 
     const reducer = (prev, next) => {
       let converted = parseInt(next.pages, 10);
@@ -59,9 +61,9 @@ class Model {
       return prev + converted;
     };
 
-    const pages = library.reduce(reducer, 0);
+    stats.pagesNum = library.reduce(reducer, 0);
 
-    return { books, read, pages };
+    return stats;
   }
 
   remove(id) {
