@@ -18,10 +18,22 @@ class UI extends UiCreator {
     return get.node(this.data.nodeParts.settings);
   }
 
-  statistics() {
+  statistics(stats) {
     const get = this.constructor;
 
-    return get.node(this.data.nodeParts.statistics);
+    const { statistics } = this.data.nodeParts;
+
+    Object.entries(stats).forEach((entry) => {
+      const [name, result] = entry;
+
+      const field = get.ref(name, statistics);
+
+      const { value } = field.c;
+
+      value.textContent = result;
+    });
+
+    return get.node(statistics);
   }
 
   cardView(lib) {
@@ -231,6 +243,14 @@ class UI extends UiCreator {
     const get = this.constructor;
 
     return get.node(this.data.nodeParts.addBookBtn);
+  }
+
+  confirmDelete() {
+    const get = this.constructor;
+
+    const dialog = this.data.nodeParts.confirmDelete;
+
+    return get.node(dialog);
   }
 }
 
