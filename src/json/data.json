@@ -50,26 +50,51 @@
           "tag": "h2",
           "textContent": "Statistics"
         },
-        "fields": {
-          "s": {
-            "names": [
-              "Books in the library: ",
-              "Read books: ",
-              "Total pages",
-              "Forgotten books"
-            ],
-            "ids": ["booksNum", "readNum", "pagesNum", "forgotNum"]
-          },
+        "booksNum": {
           "tag": "p",
           "className": "field",
           "c": {
             "title": {
               "tag": "span",
-              "className": "title"
+              "className": "title",
+              "textContent": "Books in the library: "
             },
             "value": {
               "tag": "span",
-              "className": "value"
+              "className": "value",
+              "id": "booksNum"
+            }
+          }
+        },
+        "readNum": {
+          "tag": "p",
+          "className": "field",
+          "c": {
+            "title": {
+              "tag": "span",
+              "className": "title",
+              "textContent": "Read books: "
+            },
+            "value": {
+              "tag": "span",
+              "className": "value",
+              "id": "readNum"
+            }
+          }
+        },
+        "pagesNum": {
+          "tag": "p",
+          "className": "field",
+          "c": {
+            "title": {
+              "tag": "span",
+              "className": "title",
+              "textContent": "Total pages: "
+            },
+            "value": {
+              "tag": "span",
+              "className": "value",
+              "id": "pagesNum"
             }
           }
         }
@@ -262,7 +287,8 @@
           "c": {
             "formHeader": {
               "tag": "h2",
-              "textContent": "Please, add the Book"
+              "className": "header",
+              "textContent": "Add a Book"
             },
             "formFields": {
               "tag": "label",
@@ -305,16 +331,16 @@
             "buttons": {
               "tag": "div",
               "c": {
-                "cancelBtn": {
-                  "tag": "button",
-                  "className": "cancel",
-                  "id": "cancel",
-                  "type": "button"
-                },
                 "saveBtn": {
                   "tag": "button",
                   "className": "save",
                   "id": "save",
+                  "type": "submit"
+                },
+                "cancelBtn": {
+                  "tag": "button",
+                  "className": "cancel",
+                  "id": "cancel",
                   "type": "button"
                 }
               }
@@ -328,6 +354,34 @@
       "textContent": "Add Book",
       "className": "addBookBtn",
       "id": "addBook"
+    },
+    "confirmDelete": {
+      "tag": "dialog",
+      "className": "dialog",
+      "id": "deleteDialog",
+      "c": {
+        "confirmation": {
+          "tag": "h2",
+          "textContent": "Are you sure you want to delete a book from your library?"
+        },
+        "buttons": {
+          "tag": "div",
+          "c": {
+            "saveBtn": {
+              "tag": "button",
+              "className": "save",
+              "id": "delete",
+              "type": "submit"
+            },
+            "cancelBtn": {
+              "tag": "button",
+              "className": "cancel",
+              "id": "skip",
+              "type": "button"
+            }
+          }
+        }
+      }
     }
   },
   "tools": {
