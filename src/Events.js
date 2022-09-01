@@ -1,9 +1,9 @@
+import Book from './Book';
 import FieldChecks from './FieldChecks';
 import data from './json/data.json';
 import Model from './Model';
 import UI from './UI';
 import UiCreator from './UiCreator';
-import Book from './Book';
 
 class Events {
   static uiCreate = new UiCreator();
@@ -12,7 +12,7 @@ class Events {
 
   static model = new Model();
 
-  static FieldChecks = new FieldChecks();
+  static fieldChecks = new FieldChecks();
 
   static mainPage() {
     const wrapper = this.ui.wrapper();
@@ -20,15 +20,50 @@ class Events {
     this.uiCreate.render(
       wrapper,
       this.ui.settings(),
-      this.ui.statistics(),
+      this.ui.statistics(this.model.statistics),
       this.ui.cardView(this.model.library),
       this.ui.addBookForm(),
+      this.ui.confirmDelete(),
       this.ui.addBookBtn()
     );
     return wrapper;
   }
 
-  static viewManage(node) {
+  static updateStatistics() {
+    const stats = document.querySelector('.statistics');
+
+    stats.replaceWith(this.ui.statistics(this.model.statistics));
+  }
+
+  static confirmDelete(id, card) {
+    const dialog = document.querySelector('#deleteDialog');
+
+    dialog.showModal();
+
+    const deleteBtn = dialog.querySelector('#delete');
+
+    const deleteEvent = () => {
+      dialog.close();
+
+      this.model.remove(id);
+
+      card.remove();
+
+      this.updateStatistics();
+    };
+
+    deleteBtn.addEventListener('click', deleteEvent, { once: true });
+
+    const skipBtn = dialog.querySelector('#skip');
+
+    const skipEvent = () => {
+      dialog.close();
+    };
+
+    skipBtn.addEventListener('click', skipEvent, { once: true });
+  }
+
+  static bookEvents(node) {
     const replaceBtn = (prev, next, bundle, event, listener) => {
       const prevBtn = bundle.querySelector(`.${prev}`);
 
@@ -83,7 +118,7 @@ class Events {
 
       if (element.tagName === 'TR') bookUi = this.ui.tableView(book).lastChild;
 
-      this.viewManage(bookUi);
+      this.bookEvents(bookUi);
 
       element.replaceWith(bookUi);
     };
@@ -120,6 +155,8 @@ class Events {
       readChangeColor(e, status);
 
       this.model.setRead(id, status);
+
+      this.updateStatistics();
     };
 
     isReadBtns.forEach((btn) => btn.addEventListener('click', isItRead));
@@ -133,9 +170,7 @@ class Events {
 
       const { id } = e.target.dataset;
 
-      this.model.remove(id);
-
-      card.remove();
+      this.confirmDelete(id, card);
     };
 
     deleteBtns.forEach((btn) => btn.addEventListener('click', remove));
@@ -178,6 +213,8 @@ class Events {
         this.model.update(book);
 
         setViewMode(event.target.dataset.id, card);
+
+        this.updateStatistics();
       };
 
       replaceBtn(update, store, card, 'click', save);
@@ -208,7 +245,7 @@ class Events {
 
       const mock = get.ui[newView](get.model.library);
 
-      get.viewManage(mock);
+      get.bookEvents(mock);
 
       view.replaceWith(mock);
     };
@@ -221,7 +258,7 @@ class Events {
 
     tableBtn.addEventListener('click', table);
 
-    return get.viewManage(node);
+    return get.bookEvents(node);
   }
 
   addBook(node) {
@@ -245,7 +282,7 @@ class Events {
 
     const dialog = node.querySelector('#dialog');
 
-    const save = () => {
+    const save = (e) => {
       const book = new Book(node);
 
       const newBook = book.create();
@@ -253,6 +290,24 @@ class Events {
       get.model.add(newBook);
 
       dialog.close();
+
+      e.preventDefault();
+
+      const libNode = node.querySelector('#view');
+
+      let lastBook;
+
+      if (libNode.classList.contains('cards')) {
+        lastBook = get.ui.cardView([get.model.library.pop()]).firstChild;
+      } else if (libNode.classList.contains('table')) {
+        lastBook = get.ui.tableView([get.model.library.pop()]).lastChild;
+      }
+
+      get.bookEvents(lastBook);
+
+      libNode.append(lastBook);
+
+      get.updateStatistics(node);
     };
 
     saveBtn.addEventListener('click', save);
@@ -282,6 +337,8 @@ class Events {
     this.form(wrapper);
 
     this.addBook(wrapper);
+
+    this.constructor.fieldChecks.formFields(wrapper);
   }
 }
 
