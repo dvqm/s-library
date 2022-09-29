@@ -18,15 +18,6 @@ class Book {
 
     return book;
   }
-
-  clear() {
-    this.inputs.forEach((input) => {
-      const field = input;
-
-      if (field.id === 'isRead') field.checked = false;
-      else field.value = '';
-    });
-  }
 }
 
 export default Book;
