@@ -1,5 +1,5 @@
 import Book from './Book';
-import FieldChecks from './FieldChecks';
+import FieldsValidation from './FieldsValidation';
 import data from './json/data.json';
 import Model from './Model';
 import UI from './UI';
@@ -11,8 +11,6 @@ class Events {
   static ui = new UI(data);
 
   static model = new Model();
-
-  static fieldChecks = new FieldChecks();
 
   static mainPage() {
     const wrapper = this.ui.wrapper();
@@ -143,8 +141,6 @@ class Events {
         changeClassName(card.parentElement, 'read', 'unread');
     };
 
-    // set book read or unread mode
-
     const isReadBtns = node.querySelectorAll('.isRead');
 
     const isItRead = (e) => {
@@ -160,8 +156,6 @@ class Events {
     };
 
     isReadBtns.forEach((btn) => btn.addEventListener('click', isItRead));
-
-    // set book remove mode
 
     const deleteBtns = node.querySelectorAll('.delete');
 
@@ -278,11 +272,11 @@ class Events {
   form(node) {
     const get = this.constructor;
 
-    const saveBtn = node.querySelector('#save');
-
     const dialog = node.querySelector('#dialog');
 
-    const save = (e) => {
+    const form = dialog.querySelector('.addBookForm');
+
+    const save = () => {
       const book = new Book(node);
 
       const newBook = book.create();
@@ -290,8 +284,6 @@ class Events {
       get.model.add(newBook);
 
       dialog.close();
-
-      e.preventDefault();
 
       const libNode = node.querySelector('#view');
 
@@ -308,21 +300,39 @@ class Events {
       libNode.append(lastBook);
 
       get.updateStatistics(node);
+
+      form.reset();
     };
 
-    saveBtn.addEventListener('click', save);
+    const validation = new FieldsValidation(node);
+
+    validation.init();
+
+    form.addEventListener('submit', save);
 
     const cancelBtn = node.querySelector('#cancel');
 
     const cancel = () => {
-      const book = new Book(node);
+      form.reset();
 
-      book.clear();
+      const inputs = form.querySelectorAll('input');
+
+      inputs.forEach((input) => input.setCustomValidity(''));
 
       dialog.close();
     };
 
     cancelBtn.addEventListener('click', cancel);
+
+    const isRead = node.querySelector('#isRead');
+
+    isRead.addEventListener('click', () => {
+      const finish = node.querySelector('#finish');
+      if (!isRead.checked) {
+        finish.value = '';
+        finish.setCustomValidity('');
+      }
+    });
 
     return node;
   }
@@ -337,8 +347,6 @@ class Events {
     this.form(wrapper);
 
     this.addBook(wrapper);
-
-    this.constructor.fieldChecks.formFields(wrapper);
   }
 }
 

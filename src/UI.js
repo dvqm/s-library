@@ -55,6 +55,8 @@ class UI extends UiCreator {
       captions.forEach((caption) => {
         const ref = card.c[caption];
 
+        const isReadTitles = ui.tools.titles.isRead;
+
         if (caption === 'id') {
           ref.textContent = ref.textContent.concat(book[caption]);
         } else if (
@@ -63,7 +65,7 @@ class UI extends UiCreator {
           caption === 'publish'
         ) {
           ref.c.date.textContent = book[caption];
-          if (book[caption] === undefined) ref.c.date.textContent = '--/--/--';
+          if (!book[caption]) ref.c.date.textContent = '--/--/--';
         } else if (caption === 'created') {
           ref.c.date.textContent = book[caption];
         } else if (caption === 'author') {
@@ -71,9 +73,11 @@ class UI extends UiCreator {
         } else if (caption === 'isRead') {
           if (book[caption] === 'true') {
             ref.checked = true;
+            ref.title = isReadTitles.true;
             card.className = card.className.concat(' read');
           } else {
             ref.checked = false;
+            ref.title = isReadTitles.false;
             card.className = card.className.concat(' unread');
           }
 
@@ -155,16 +159,18 @@ class UI extends UiCreator {
 
         const cell = get.copy(td);
 
+        const isReadTitles = ui.tools.titles.isRead;
+
         if (key === 'isRead') {
           checkbox['data-id'] = book.id;
 
           if (value === 'true') {
             checkbox.checked = true;
-
+            checkbox.title = isReadTitles.true;
             row.className = row.className.concat(' read');
           } else {
             checkbox.checked = false;
-
+            checkbox.title = isReadTitles.false;
             row.className = row.className.concat(' unread');
           }
 
@@ -210,11 +216,15 @@ class UI extends UiCreator {
 
     const ids = formFields.c.content.id;
 
+    const requires = formFields.c.content.required;
+
     formFields.c.name.textContent = '';
 
     formFields.c.content.type = '';
 
     formFields.c.content.id = '';
+
+    formFields.c.content.required = '';
 
     const form = get.ref('form', view);
 
@@ -230,6 +240,10 @@ class UI extends UiCreator {
       field.c.content.type = types[ind];
 
       field.c.content.id = id;
+
+      field.c.content.required = requires[ind];
+
+      field.c.content.name = id;
 
       form.c[id] = field;
     });

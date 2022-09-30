@@ -47,6 +47,7 @@ class UiCreator {
 
       if (key !== 'tag' || key !== 'c' || key !== 's') parent[key] = value;
       if (key.includes('data-')) parent.setAttribute(key, value);
+      if (key === 'required' && value === 'false') parent.removeAttribute(key);
     });
 
     const blank = this.copy(data);

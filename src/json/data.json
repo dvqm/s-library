@@ -33,12 +33,14 @@
           "tag": "button",
           "id": "toggleCard",
           "className": "toggleCard",
+          "title": "View as cards",
           "disabled": "true"
         },
         "tableBtn": {
           "tag": "button",
           "className": "toggleTable",
-          "id": "toggleTable"
+          "id": "toggleTable",
+          "title": "View as table"
         }
       }
     },
@@ -155,7 +157,8 @@
             },
             "pages": {
               "tag": "span",
-              "className": "pages"
+              "className": "pages",
+              "title": "Number of pages"
             },
             "start": {
               "tag": "p",
@@ -206,11 +209,13 @@
               "c": {
                 "edit": {
                   "tag": "button",
-                  "className": "edit"
+                  "className": "edit",
+                  "title": "Edit book"
                 },
                 "delete": {
                   "tag": "button",
-                  "className": "delete"
+                  "className": "delete",
+                  "title": "Delete book"
                 }
               }
             }
@@ -284,6 +289,7 @@
         "form": {
           "tag": "form",
           "className": "addBookForm",
+          "name": "addBookForm",
           "c": {
             "formHeader": {
               "tag": "h2",
@@ -324,6 +330,15 @@
                     "start",
                     "finish",
                     "isRead"
+                  ],
+                  "required": [
+                    "true",
+                    "true",
+                    "true",
+                    "false",
+                    "false",
+                    "false",
+                    "false"
                   ]
                 }
               }
@@ -334,8 +349,7 @@
                 "saveBtn": {
                   "tag": "button",
                   "className": "save",
-                  "id": "save",
-                  "type": "submit"
+                  "id": "save"
                 },
                 "cancelBtn": {
                   "tag": "button",
@@ -409,6 +423,12 @@
       "del": "delete",
       "store": "save",
       "abort": "cancel"
+    },
+    "titles": {
+      "isRead": {
+        "true": "The book was read",
+        "false": "The book has not been read yet."
+      }
     }
   }
 }

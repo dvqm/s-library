@@ -348,3 +348,12 @@
     justify-content: space-around;
   }
 }
+
+input:valid {
+  border: 1px solid lightgreen;
+  overflow: visible;
+}
+
+input:invalid {
+  border: 1px solid red;
+}
