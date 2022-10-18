@@ -89,6 +89,8 @@ class Model {
   setRead(id, status) {
     const book = this.getBook(id);
 
+    if (!status) book.finish = '';
+
     book.isRead = status ? 'true' : 'false';
 
     this.update(book);
