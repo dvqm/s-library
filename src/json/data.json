@@ -411,10 +411,10 @@
       "created"
     ],
     "editableFields": [
-      ["author", "text"],
-      ["title", "text"],
+      ["author", "text", "required"],
+      ["title", "text", "required"],
       ["publish", "date"],
-      ["pages", "number"],
+      ["pages", "number", "required"],
       ["start", "date"],
       ["finish", "date"]
     ],
