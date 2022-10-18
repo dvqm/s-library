@@ -80,9 +80,9 @@ class Events {
       prevBtn.replaceWith(btn);
     };
 
-    const setEditMode = (fields, element) => {
+    const setEditMode = (fields, element, event) => {
       fields.forEach((set) => {
-        const [field, type] = set;
+        const [field, type, required] = set;
 
         const el = element.querySelector(`.${field}`);
 
@@ -91,6 +91,9 @@ class Events {
         input.className = field;
 
         input.type = type;
+
+        if (required) input.required = true;
+
         if (el && element.tagName === 'DIV') {
           input.value = el.textContent;
 
@@ -105,6 +108,10 @@ class Events {
           el.append(input);
         }
       });
+
+      const checkbox = element.querySelector('.isRead');
+
+      checkbox.removeEventListener('click', event);
     };
 
     const setViewMode = (id, element) => {
@@ -146,11 +153,15 @@ class Events {
     const isItRead = (e) => {
       const { id } = e.target.dataset;
 
+      const card = e.target.parentElement;
+
       const status = e.target.checked;
 
       readChangeColor(e, status);
 
       this.model.setRead(id, status);
+
+      setViewMode(id, card);
 
       this.updateStatistics();
     };
@@ -169,8 +180,6 @@ class Events {
 
     deleteBtns.forEach((btn) => btn.addEventListener('click', remove));
 
-    // set edit mode with save or cancel buttons
-
     const editBtns = node.querySelectorAll('.edit');
 
     const edit = (e) => {
@@ -178,11 +187,19 @@ class Events {
 
       const settings = data.tools.editableFields;
 
-      setEditMode(settings, card);
+      setEditMode(settings, card, isItRead);
+
+      const fieldsValidation = new FieldsValidation(card);
+
+      fieldsValidation.init();
 
       const { update, del, store, abort } = data.tools.changeableBtns;
 
       const save = (event) => {
+        const validityCheck = fieldsValidation.checkValidity;
+
+        if (!validityCheck) return;
+
         const updatedFields = {};
 
         settings.forEach((field) => {
@@ -195,15 +212,17 @@ class Events {
           updatedFields[name] = el.value;
         });
 
+        const isRead = card.querySelector('.isRead');
+
+        updatedFields.isRead = isRead.checked.toString();
+
         const book = this.model.getBook(event.target.dataset.id);
 
         Object.entries(updatedFields).forEach((entry) => {
           const [key, value] = entry;
-
-          if (value.length > 0) book[key] = value;
+          if (value) book[key] = value;
           else delete book[key];
         });
-
         this.model.update(book);
 
         setViewMode(event.target.dataset.id, card);
@@ -304,7 +323,7 @@ class Events {
       form.reset();
     };
 
-    const validation = new FieldsValidation(node);
+    const validation = new FieldsValidation(form);
 
     validation.init();
 
