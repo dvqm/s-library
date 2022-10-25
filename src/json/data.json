@@ -102,6 +102,10 @@
         }
       }
     },
+    "content": {
+      "tag": "div",
+      "className": "content"
+    },
     "cardView": {
       "tag": "div",
       "className": "cards",

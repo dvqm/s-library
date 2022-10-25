@@ -15,15 +15,23 @@ class Events {
   static mainPage() {
     const wrapper = this.ui.wrapper();
 
+    const content = this.ui.content();
+
+    this.uiCreate.render(
+      content,
+      this.ui.cardView(this.model.library),
+      this.ui.statistics(this.model.statistics)
+    );
+
     this.uiCreate.render(
       wrapper,
       this.ui.settings(),
-      this.ui.statistics(this.model.statistics),
-      this.ui.cardView(this.model.library),
+      content,
       this.ui.addBookForm(),
       this.ui.confirmDelete(),
       this.ui.addBookBtn()
     );
+
     return wrapper;
   }
 

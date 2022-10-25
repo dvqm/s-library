@@ -36,6 +36,12 @@ class UI extends UiCreator {
     return get.node(statistics);
   }
 
+  content() {
+    const get = this.constructor;
+
+    return get.node(this.data.nodeParts.content);
+  }
+
   cardView(lib) {
     const get = this.constructor;
 
