@@ -20,6 +20,7 @@
         },
         "toggleTheme": {
           "tag": "label",
+          "className": "themeSwitch",
           "textContent": "Lights Off",
           "c": {
             "toggler": {
