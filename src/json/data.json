@@ -257,7 +257,7 @@
         },
         "tableRows": {
           "tag": "tr",
-          "className": "tableData",
+          "className": "tableRow",
           "c": {
             "tableData": {
               "tag": "td",
