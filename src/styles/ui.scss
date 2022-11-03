@@ -185,6 +185,126 @@
   }
 }
 
+.table {
+  width: 1000px;
+  margin-top: 30px;
+  margin-right: 25px;
+  text-align: center;
+
+  .tableData {
+    &:nth-child(1) {
+      width: 8%;
+    }
+
+    &:nth-child(2) {
+      width: 15%;
+    }
+
+    &:nth-child(3) {
+      width: 17%;
+    }
+
+    &:nth-child(4) {
+      width: 11%;
+    }
+
+    &:nth-child(5) {
+      width: 5%;
+    }
+
+    &:nth-child(6) {
+      width: 12%;
+    }
+
+    &:nth-child(7) {
+      width: 13%;
+    }
+
+    &:nth-child(8) {
+      width: 2%;
+    }
+
+    &:nth-child(9) {
+      width: 10%;
+    }
+
+    &:nth-child(10) {
+      width: 7%;
+    }
+  }
+
+  .tableHeader {
+    padding: 5px;
+  }
+
+  .author {
+    text-align: left;
+  }
+
+  .isRead {
+    &::after,
+    &:checked::after {
+      width: 25px;
+      height: 25px;
+      background-size: contain;
+      background-position: center;
+      top: -6px;
+      left: -6px;
+    }
+  }
+
+  .edit,
+  .delete,
+  .save,
+  .cancel {
+    width: 22px;
+    height: 16px;
+    margin: 8px 4px;
+    background-size: contain;
+    background-position: center;
+  }
+
+  .save {
+    position: relative;
+
+    &:before,
+    &:after {
+      border-radius: 3px;
+
+      top: 5px;
+      left: 4px;
+    }
+
+    &:before {
+      width: 3px;
+      height: 8px;
+    }
+
+    &:after {
+      width: 13px;
+      height: 3px;
+    }
+  }
+
+  .cancel {
+    &:before,
+    &:after {
+      width: 15px;
+      height: 3px;
+      border-radius: 3px;
+
+      bottom: 5px;
+      left: 1px;
+    }
+  }
+
+  input {
+    text-align: center;
+    padding: 0;
+    font-size: 0.7em;
+  }
+}
+
 .edit,
 .delete,
 .save,
@@ -200,29 +320,6 @@
   &:active {
     background-color: lightgray;
     border-radius: 3px;
-  }
-}
-
-.table {
-  .isRead {
-    &::after,
-    &:checked::after {
-      width: 25px;
-      height: 25px;
-      background-size: contain;
-      background-position: center;
-      top: -5px;
-      left: 5px;
-    }
-  }
-
-  .edit,
-  .delete {
-    width: 22px;
-    height: 16px;
-    background-size: contain;
-    background-position: center;
-    margin: 8px 4px;
   }
 }
 
