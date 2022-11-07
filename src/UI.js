@@ -193,9 +193,9 @@ class UI extends UiCreator {
 
       delete row.c.actions;
 
-      actions.c.edit['data-id'] = book.id;
+      actions.c.wrapper.c.edit['data-id'] = book.id;
 
-      actions.c.delete['data-id'] = book.id;
+      actions.c.wrapper.c.delete['data-id'] = book.id;
 
       row.c.actions = actions;
       view.c[sorted.id] = row;
