@@ -182,8 +182,7 @@ class UI extends UiCreator {
 
           cell.c = { isRead: checkbox };
         } else {
-          cell.textContent = value;
-
+          cell.c.wrapper.textContent = value;
           cell.className += ` ${key}`;
         }
 
