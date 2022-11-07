@@ -261,7 +261,12 @@
           "c": {
             "tableData": {
               "tag": "td",
-              "className": "tableData"
+              "className": "tableData",
+              "c": {
+                "wrapper": {
+                  "tag": "div"
+                }
+              }
             },
             "isRead": {
               "tag": "input",
