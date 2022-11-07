@@ -323,7 +323,9 @@ class Events {
 
     const form = dialog.querySelector('.addBookForm');
 
-    const save = () => {
+    const save = (e) => {
+      e.preventDefault();
+
       const book = new Book(node);
 
       const newBook = book.create();
