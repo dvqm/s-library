@@ -90,13 +90,14 @@ class FieldsValidation {
   }
 
   isReadManage() {
-    const isRead = this.form.querySelector(`${this.selector}isRead`);
+    const isRead = this.form.querySelector(`input${this.selector}isRead`);
 
-    const finish = this.form.querySelector(`${this.selector}finish`);
+    const finish = this.form.querySelector(`input${this.selector}finish`);
 
     isRead.addEventListener('click', () => {
       if (!isRead.checked) {
         finish.value = '';
+
         finish.setCustomValidity('');
       }
     });

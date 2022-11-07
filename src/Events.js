@@ -160,11 +160,16 @@ class Events {
         changeClassName(card.parentElement, 'read', 'unread');
     };
 
-    const cardSet = (target) => {
+    const cardSet = (target, forIsItRead) => {
       let card = target.parentElement.parentElement;
 
       if (target.parentElement.parentElement.tagName === 'TD')
         card = target.parentElement.parentElement.parentElement;
+
+      if (forIsItRead === 'isItRead') card = target.parentElement;
+
+      if (forIsItRead === 'isItRead' && target.parentElement.tagName === 'TD')
+        card = target.parentElement.parentElement;
 
       return card;
     };
@@ -174,7 +179,7 @@ class Events {
     const isItRead = (e) => {
       const { id } = e.target.dataset;
 
-      const card = e.target.parentElement;
+      const card = cardSet(e.target, 'isItRead');
 
       const status = e.target.checked;
 
@@ -228,7 +233,9 @@ class Events {
 
           let el = card.querySelector(`.${name}`);
 
-          if (el.tagName === 'TD') el = el.firstChild;
+          if (el.tagName === 'TD') {
+            el = el.firstChild.firstChild;
+          }
 
           updatedFields[name] = el.value;
         });
