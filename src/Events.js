@@ -94,6 +94,8 @@ class Events {
 
         const el = element.querySelector(`.${field}`);
 
+        const wrapper = document.createElement('div');
+
         const input = document.createElement('input');
 
         input.className = field;
@@ -102,10 +104,12 @@ class Events {
 
         if (required) input.required = true;
 
+        wrapper.append(input);
+
         if (el && element.tagName === 'DIV') {
           input.value = el.textContent;
 
-          el.replaceWith(input);
+          el.replaceWith(wrapper);
         }
 
         if (el && element.tagName === 'TR') {
@@ -113,7 +117,7 @@ class Events {
 
           el.textContent = '';
 
-          el.append(input);
+          el.append(wrapper);
         }
       });
 
