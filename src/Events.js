@@ -160,6 +160,15 @@ class Events {
         changeClassName(card.parentElement, 'read', 'unread');
     };
 
+    const cardSet = (target) => {
+      let card = target.parentElement.parentElement;
+
+      if (target.parentElement.parentElement.tagName === 'TD')
+        card = target.parentElement.parentElement.parentElement;
+
+      return card;
+    };
+
     const isReadBtns = node.querySelectorAll('.isRead');
 
     const isItRead = (e) => {
@@ -183,7 +192,7 @@ class Events {
     const deleteBtns = node.querySelectorAll('.delete');
 
     const remove = (e) => {
-      const card = e.target.parentElement.parentElement;
+      const card = cardSet(e.target);
 
       const { id } = e.target.dataset;
 
@@ -195,7 +204,7 @@ class Events {
     const editBtns = node.querySelectorAll('.edit');
 
     const edit = (e) => {
-      const card = e.target.parentElement.parentElement;
+      const card = cardSet(e.target);
 
       const settings = data.tools.editableFields;
 
