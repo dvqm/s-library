@@ -277,13 +277,18 @@
               "tag": "td",
               "className": "tableData",
               "c": {
-                "edit": {
-                  "tag": "button",
-                  "className": "edit"
-                },
-                "delete": {
-                  "tag": "button",
-                  "className": "delete"
+                "wrapper": {
+                  "tag": "div",
+                  "c": {
+                    "edit": {
+                      "tag": "button",
+                      "className": "edit"
+                    },
+                    "delete": {
+                      "tag": "button",
+                      "className": "delete"
+                    }
+                  }
                 }
               }
             }
