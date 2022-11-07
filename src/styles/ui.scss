@@ -186,52 +186,9 @@
 }
 
 .table {
-  width: 1000px;
   margin-top: 30px;
   margin-right: 25px;
   text-align: center;
-
-  .tableData {
-    &:nth-child(1) {
-      width: 8%;
-    }
-
-    &:nth-child(2) {
-      width: 15%;
-    }
-
-    &:nth-child(3) {
-      width: 17%;
-    }
-
-    &:nth-child(4) {
-      width: 11%;
-    }
-
-    &:nth-child(5) {
-      width: 5%;
-    }
-
-    &:nth-child(6) {
-      width: 12%;
-    }
-
-    &:nth-child(7) {
-      width: 13%;
-    }
-
-    &:nth-child(8) {
-      width: 2%;
-    }
-
-    &:nth-child(9) {
-      width: 10%;
-    }
-
-    &:nth-child(10) {
-      width: 7%;
-    }
-  }
 
   .tableHeader {
     padding: 5px;
@@ -239,6 +196,39 @@
 
   .author {
     text-align: left;
+  }
+
+  .tableData div input {
+    width: 95%;
+    font-size: 0.9em;
+  }
+
+  .tableData.author {
+    div {
+      width: 180px;
+    }
+  }
+
+  .tableData.title {
+    div {
+      width: 180px;
+    }
+  }
+
+  .tableData.start,
+  .tableData.finish,
+  .tableData.publish,
+  .tableData.created {
+    div {
+      width: 110px;
+    }
+  }
+
+  .tableData:last-child,
+  .tableData.id {
+    div {
+      width: 70px;
+    }
   }
 
   .isRead {
