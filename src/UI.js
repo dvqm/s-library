@@ -42,6 +42,12 @@ class UI extends UiCreator {
     return get.node(this.data.nodeParts.content);
   }
 
+  textFish() {
+    const get = this.constructor;
+
+    return get.node(this.data.nodeParts.textFish);
+  }
+
   cardView(lib) {
     const get = this.constructor;
 

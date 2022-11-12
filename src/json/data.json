@@ -107,6 +107,16 @@
       "tag": "div",
       "className": "content"
     },
+    "textFish": {
+      "tag": "div",
+      "className": "textFish",
+      "c": {
+        "text": {
+          "tag": "h2",
+          "textContent": "Please, add your first book to the library."
+        }
+      }
+    },
     "cardView": {
       "tag": "div",
       "className": "cards",

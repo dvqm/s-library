@@ -69,6 +69,29 @@ class Events {
     skipBtn.addEventListener('click', skipEvent, { once: true });
   }
 
+  emptyLib(node) {
+    const ctor = this.constructor;
+
+    const content = node.querySelector('.content');
+    if (ctor.model.library.length === 0) {
+      content.after(this.ui.textFish());
+    } else if (ctor.model.library.length > 0) {
+      const textFish = node.querySelector('.textFish');
+
+      if (textFish) textFish.remove();
+    }
+  }
+
+  emptyLibEvent(node) {
+    const deleteBtn = node.querySelector('#delete');
+
+    const checkIfEmptyLib = () => {
+      this.emptyLib(node);
+    };
+
+    deleteBtn.addEventListener('click', checkIfEmptyLib);
+  }
+
   static bookEvents(node) {
     const replaceBtn = (prev, next, bundle, event, listener) => {
       const prevBtn = bundle.querySelector(`.${prev}`);
@@ -278,7 +301,7 @@ class Events {
     const tableBtn = node.querySelector('#toggleTable');
 
     const changeView = (secBtn, newView) => (e) => {
-      e.target.setAttribute('disabled', true);
+      e.target.setAttribute('disabled', '');
 
       secBtn.removeAttribute('disabled');
 
@@ -317,7 +340,7 @@ class Events {
   }
 
   form(node) {
-    const get = this.constructor;
+    const ctor = this.constructor;
 
     const dialog = node.querySelector('#dialog');
 
@@ -330,7 +353,7 @@ class Events {
 
       const newBook = book.create();
 
-      get.model.add(newBook);
+      ctor.model.add(newBook);
 
       dialog.close();
 
@@ -339,16 +362,18 @@ class Events {
       let lastBook;
 
       if (libNode.classList.contains('cards')) {
-        lastBook = get.ui.cardView([get.model.library.pop()]).firstChild;
+        lastBook = ctor.ui.cardView([ctor.model.library.pop()]).firstChild;
       } else if (libNode.classList.contains('table')) {
-        lastBook = get.ui.tableView([get.model.library.pop()]).lastChild;
+        lastBook = ctor.ui.tableView([ctor.model.library.pop()]).lastChild;
       }
 
-      get.bookEvents(lastBook);
+      ctor.bookEvents(lastBook);
 
       libNode.append(lastBook);
 
-      get.updateStatistics(node);
+      ctor.updateStatistics(node);
+
+      this.emptyLib(node);
 
       form.reset();
     };
@@ -396,6 +421,10 @@ class Events {
     this.form(wrapper);
 
     this.addBook(wrapper);
+
+    this.emptyLib(wrapper);
+
+    this.emptyLibEvent(wrapper);
   }
 }
 
