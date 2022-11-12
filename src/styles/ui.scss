@@ -1,5 +1,5 @@
 .library {
-  width: 1200px;
+  width: 1400px;
   margin: 0 auto;
 }
 
@@ -79,8 +79,12 @@
   }
 }
 
+.textFish {
+  display: absolute;
+}
+
 .cards {
-  width: 950px;
+  width: 1071px;
   display: flex;
   flex-flow: row wrap;
 }
