@@ -27,19 +27,19 @@ class Model {
   }
 
   set library(newLibrary) {
-    this.lib = JSON.stringify(newLibrary);
+    const lib = JSON.stringify(newLibrary);
 
-    localStorage.setItem('library', this.lib);
+    localStorage.setItem('library', lib);
+  }
+
+  get liblen() {
+    return JSON.parse(localStorage.getItem('library'));
   }
 
   get library() {
-    const storedLibrary = localStorage.getItem('library');
-
-    let library = JSON.parse(storedLibrary);
+    let library = JSON.parse(localStorage.getItem('library'));
 
     if (!library) library = [];
-
-    this.library = library;
 
     return library;
   }
@@ -68,7 +68,6 @@ class Model {
 
   remove(id) {
     const { library } = this;
-
     const index = library.findIndex((book) => book.id === id);
 
     library.splice(index, 1);
