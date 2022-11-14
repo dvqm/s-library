@@ -110,6 +110,7 @@
     "textFish": {
       "tag": "div",
       "className": "textFish",
+      "id": "view",
       "c": {
         "text": {
           "tag": "h2",

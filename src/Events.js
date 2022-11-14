@@ -12,6 +12,10 @@ class Events {
 
   static model = new Model();
 
+  static initialView(library) {
+    return this.ui.cardView(library);
+  }
+
   static mainPage() {
     const wrapper = this.ui.wrapper();
 
@@ -19,7 +23,7 @@ class Events {
 
     this.uiCreate.render(
       content,
-      this.ui.cardView(this.model.library),
+      this.initialView(this.model.library),
       this.ui.statistics(this.model.statistics)
     );
 
@@ -55,7 +59,7 @@ class Events {
 
       card.remove();
 
-      this.emptyLib(e.target.parentNode.parentNode.parentNode);
+      this.ifLibraryIsEmpty(e.target.parentNode.parentNode.parentNode);
 
       this.updateStatistics();
     };
@@ -71,15 +75,27 @@ class Events {
     skipBtn.addEventListener('click', skipEvent, { once: true });
   }
 
-  static emptyLib(node) {
-    const content = node.querySelector('.content');
+  static ifLibraryIsEmpty(node) {
+    const view = node.querySelector('#view');
+
+    const cardBtn = node.querySelector('#toggleCard');
+
+    const tableBtn = node.querySelector('#toggleTable');
 
     if (this.model.library.length === 0) {
-      content.after(this.ui.textFish());
+      view.replaceWith(this.ui.textFish());
+
+      cardBtn.style.display = 'none';
+
+      tableBtn.style.display = 'none';
     } else if (this.model.library.length > 0) {
       const textFish = node.querySelector('.textFish');
 
-      if (textFish) textFish.remove();
+      if (textFish) textFish.replaceWith(this.initialView([]));
+
+      cardBtn.style.display = 'inline-block';
+
+      tableBtn.style.display = 'inline-block';
     }
   }
 
@@ -346,6 +362,8 @@ class Events {
 
       ctor.model.add(newBook);
 
+      ctor.ifLibraryIsEmpty(node);
+
       dialog.close();
 
       const libNode = node.querySelector('#view');
@@ -363,8 +381,6 @@ class Events {
       libNode.append(lastBook);
 
       ctor.updateStatistics(node);
-
-      ctor.emptyLib(node);
 
       form.reset();
     };
@@ -402,20 +418,20 @@ class Events {
     return node;
   }
 
-  testView() {
+  start() {
     const ctor = this.constructor;
 
     const wrapper = this.constructor.mainPage();
 
     ctor.ui.render(document.body, wrapper);
 
+    ctor.ifLibraryIsEmpty(wrapper);
+
     this.changeView(wrapper);
 
     this.form(wrapper);
 
     this.addBook(wrapper);
-
-    ctor.emptyLib(wrapper);
   }
 }
 
