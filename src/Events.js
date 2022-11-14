@@ -48,17 +48,19 @@ class Events {
 
     const deleteBtn = dialog.querySelector('#delete');
 
-    const deleteEvent = () => {
+    const deleteBookEvent = (e) => {
       dialog.close();
 
       this.model.remove(id);
 
       card.remove();
 
+      this.emptyLib(e.target.parentNode.parentNode.parentNode);
+
       this.updateStatistics();
     };
 
-    deleteBtn.addEventListener('click', deleteEvent, { once: true });
+    deleteBtn.addEventListener('click', deleteBookEvent, { once: true });
 
     const skipBtn = dialog.querySelector('#skip');
 
@@ -69,27 +71,16 @@ class Events {
     skipBtn.addEventListener('click', skipEvent, { once: true });
   }
 
-  emptyLib(node) {
-    const ctor = this.constructor;
-
+  static emptyLib(node) {
     const content = node.querySelector('.content');
-    if (ctor.model.library.length === 0) {
+
+    if (this.model.library.length === 0) {
       content.after(this.ui.textFish());
-    } else if (ctor.model.library.length > 0) {
+    } else if (this.model.library.length > 0) {
       const textFish = node.querySelector('.textFish');
 
       if (textFish) textFish.remove();
     }
-  }
-
-  emptyLibEvent(node) {
-    const deleteBtn = node.querySelector('#delete');
-
-    const checkIfEmptyLib = () => {
-      this.emptyLib(node);
-    };
-
-    deleteBtn.addEventListener('click', checkIfEmptyLib);
   }
 
   static bookEvents(node) {
@@ -373,7 +364,7 @@ class Events {
 
       ctor.updateStatistics(node);
 
-      this.emptyLib(node);
+      ctor.emptyLib(node);
 
       form.reset();
     };
@@ -412,9 +403,11 @@ class Events {
   }
 
   testView() {
+    const ctor = this.constructor;
+
     const wrapper = this.constructor.mainPage();
 
-    this.constructor.ui.render(document.body, wrapper);
+    ctor.ui.render(document.body, wrapper);
 
     this.changeView(wrapper);
 
@@ -422,9 +415,7 @@ class Events {
 
     this.addBook(wrapper);
 
-    this.emptyLib(wrapper);
-
-    this.emptyLibEvent(wrapper);
+    ctor.emptyLib(wrapper);
   }
 }
 
