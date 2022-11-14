@@ -1,11 +1,9 @@
 import Events from './Events';
 import './styles/ui.scss';
 
-import Model from './Model';
-
 const uiWithEvents = new Events();
 
-uiWithEvents.testView();
+uiWithEvents.start();
 
 const mockLibrary = [
   {
