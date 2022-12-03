@@ -107,9 +107,9 @@
       "tag": "div",
       "className": "content"
     },
-    "textFish": {
+    "ifEmpty": {
       "tag": "div",
-      "className": "textFish",
+      "className": "ifEmpty",
       "id": "view",
       "c": {
         "text": {

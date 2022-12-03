@@ -83,15 +83,15 @@ class Events {
     const tableBtn = node.querySelector('#toggleTable');
 
     if (this.model.library.length === 0) {
-      view.replaceWith(this.ui.textFish());
+      view.replaceWith(this.ui.ifEmpty());
 
       cardBtn.style.display = 'none';
 
       tableBtn.style.display = 'none';
     } else if (this.model.library.length > 0) {
-      const textFish = node.querySelector('.textFish');
+      const ifEmpty = node.querySelector('.ifEmpty');
 
-      if (textFish) textFish.replaceWith(this.initialView([]));
+      if (ifEmpty) ifEmpty.replaceWith(this.initialView([]));
 
       cardBtn.style.display = 'inline-block';
 

@@ -42,10 +42,10 @@ class UI extends UiCreator {
     return get.node(this.data.nodeParts.content);
   }
 
-  textFish() {
+  ifEmpty() {
     const get = this.constructor;
 
-    return get.node(this.data.nodeParts.textFish);
+    return get.node(this.data.nodeParts.ifEmpty);
   }
 
   cardView(lib) {
