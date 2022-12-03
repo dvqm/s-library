@@ -3,12 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const json5 = require('json5');
 
 module.exports = {
-  mode: 'development',
   entry: './src/index.js',
-  devtool: 'source-map',
-  devServer: {
-    static: './dist',
-  },
   plugins: [
     new HtmlWebpackPlugin({
       title: 'Own Library',
