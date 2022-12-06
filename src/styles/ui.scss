@@ -1,6 +1,7 @@
 @use './svgImg';
 
 .library {
+  position: relative;
   width: 1400px;
   margin: 0 auto;
 }
@@ -10,8 +11,8 @@
 
   .themeSwitch {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 90px;
+    right: 70px;
   }
 }
 
@@ -56,7 +57,7 @@
 .content {
   display: flex;
   flex-flow: row nowrap;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: flex-start;
 }
 
@@ -437,9 +438,9 @@
 }
 
 .addBookBtn {
-  position: fixed;
-  right: 20px;
-  bottom: 20px;
+  position: absolute;
+  right: 45px;
+  top: 700px;
   width: 100px;
   height: 40px;
   background: #4f8a8b;
