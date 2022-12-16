@@ -63,7 +63,7 @@ class UiCreator {
     return parent;
   }
 
-  static composer(data, ...handlers) {
+  static composer(...handlers) {
     return [...handlers].reduce((prev, next) => next(prev), {});
   }
 
