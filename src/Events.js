@@ -18,7 +18,6 @@ class Events {
 
   static mainPage() {
     const wrapper = this.ui.wrapper();
-    console.dir(wrapper);
 
     const content = this.ui.content();
 
