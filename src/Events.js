@@ -18,6 +18,7 @@ class Events {
 
   static mainPage() {
     const wrapper = this.ui.wrapper();
+    console.dir(wrapper);
 
     const content = this.ui.content();
 
@@ -35,6 +36,13 @@ class Events {
       this.ui.confirmDelete(),
       this.ui.addBookBtn()
     );
+
+    const toggler = wrapper.querySelector('#lightSwitch');
+
+    toggler.addEventListener('click', (e) => {
+      if (e.target.checked) document.body.className = 'dark';
+      else document.body.className = '';
+    });
 
     return wrapper;
   }
