@@ -1,4 +1,6 @@
 # Library
+[Github pages](https://ocnm.github.io/sb-library/)
+
 SPA for storing a list of books.
 
 * CRUD.
@@ -11,5 +13,3 @@ SPA for storing a list of books.
 * Javascript.
 * SCSS.
 * Webpack.
-
-[Github pages](https://ocnm.github.io/sb-library/)
