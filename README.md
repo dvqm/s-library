@@ -1,5 +1,5 @@
 # Library
-[Github pages](https://ocnm.github.io/sb-library/)
+[Github pages](https://dvqm.github.io/s-library/)
 
 SPA for storing a list of books.
 
